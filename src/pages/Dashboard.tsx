@@ -14,5 +14,9 @@ export default function Dashboard() {
   useEffect(() => {
     fetchMascots();
   }, []);
-  return <div>Dashboard</div>;
+  return (
+    <div>
+      <h1>Dashboard</h1>
+    </div>
+  );
 }
