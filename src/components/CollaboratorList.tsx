@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import type { Collaborator } from "../types/collaborator";
+import CollaboratorCard from "./CollaboratorCard";
 
 export default function CollaboratorList() {
   const [collaborators, setCollaborators] = useState<Collaborator[]>([]);
@@ -21,7 +22,9 @@ export default function CollaboratorList() {
   return (
     <ul>
       {collaborators.map((collab) => (
-        <li key={collab._id}>{collab.name}</li>
+        <li key={collab._id}>
+          <CollaboratorCard />
+        </li>
       ))}
     </ul>
   );
