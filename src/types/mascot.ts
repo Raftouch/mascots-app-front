@@ -9,4 +9,5 @@ export type Mascot = {
   birthDate: string;
   imageName?: string;
   description: string;
+  joinedAt: string;
 };

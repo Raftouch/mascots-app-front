@@ -28,6 +28,7 @@ export default function MascotList() {
           <p>{mascot.gender}</p>
           <p>{mascot.birthDate}</p>
           <p>{mascot.description}</p>
+          <p>{mascot.joinedAt}</p>
           <p>{mascot.collaborator.name}</p>
         </li>
       ))}
