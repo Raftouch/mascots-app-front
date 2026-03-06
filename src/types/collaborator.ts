@@ -1,4 +1,4 @@
 export type Collaborator = {
-  _id: number;
+  _id: string;
   name: string;
 };
