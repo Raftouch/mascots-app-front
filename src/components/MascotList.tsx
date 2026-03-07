@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import type { Mascot } from "../types/mascot";
 import MascotCard from "./MascotCard";
+import { Link } from "react-router-dom";
 
 export default function MascotList() {
   const [mascots, setMascots] = useState<Mascot[]>([]);
@@ -24,8 +25,10 @@ export default function MascotList() {
     <ul>
       {mascots.map((mascot) => (
         <li key={mascot._id}>
-          {/* <MascotCard /> */}
-          <p>{mascot.name}</p>
+          <Link to={`/mascots/${mascot._id}`}>
+            {/* <MascotCard /> */}
+            <p>{mascot.name}</p>
+          </Link>
         </li>
       ))}
     </ul>
