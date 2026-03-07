@@ -29,18 +29,21 @@ export default function CollaboratorCard() {
   }, [id]);
 
   return (
-    <>
-      {collaborator?.name}
+    <div className="max-w-3xl mx-auto p-6">
+      <h2 className="text-2xl font-bold mb-4">{collaborator?.name}</h2>
 
-      <ul>
+      <ul className="space-y-4">
         {mascotsByCollaborator.map((mascot) => (
-          <li key={mascot._id}>
-            <p>{mascot.name}</p>
-            <p>{mascot.breed}</p>
-            <p>{mascot.gender}</p>
+          <li
+            className="p-4 rounded-lg bg-white shadow-sm hover:bg-gray-50 space-y-2"
+            key={mascot._id}
+          >
+            <p className="font-medium">{mascot.name}</p>
+            <p className="text-sm text-gray-600">{mascot.breed}</p>
+            <p className="text-sm text-gray-600">{mascot.gender}</p>
           </li>
         ))}
       </ul>
-    </>
+    </div>
   );
 }

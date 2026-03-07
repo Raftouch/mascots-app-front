@@ -20,14 +20,19 @@ export default function Dashboard() {
   }, []);
 
   return (
-    <div>
-      <h1>Dashboard</h1>
-      <div>
-        <h2>Recently added :</h2>
+    <div className="max-w-3xl mx-auto p-6">
+      <h1 className="text-3xl font-bold mb-6">Dashboard</h1>
+      <div className="bg-white shadow-md rounded-xl p-5">
+        <h2 className="text-xl font-semibold mb-4">Recently added :</h2>
 
-        <ul>
+        <ul className="space-y-2">
           {lastAddedMascots.map((mascot) => (
-            <li key={mascot._id}>{mascot.name}</li>
+            <li
+              className="p-3 rounded-lg border border-gray-200"
+              key={mascot._id}
+            >
+              <p>{mascot.name}</p>
+            </li>
           ))}
         </ul>
       </div>
