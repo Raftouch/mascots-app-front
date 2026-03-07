@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import type { Mascot } from "../types/mascot";
+import MascotCard from "./MascotCard";
 
 export default function MascotList() {
   const [mascots, setMascots] = useState<Mascot[]>([]);
@@ -23,13 +24,8 @@ export default function MascotList() {
     <ul>
       {mascots.map((mascot) => (
         <li key={mascot._id}>
+          {/* <MascotCard /> */}
           <p>{mascot.name}</p>
-          <p>{mascot.breed}</p>
-          <p>{mascot.gender}</p>
-          <p>{mascot.birthDate}</p>
-          <p>{mascot.description}</p>
-          <p>{mascot.joinedAt}</p>
-          <p>{mascot.collaborator.name}</p>
         </li>
       ))}
     </ul>
