@@ -3,6 +3,7 @@ import Dashboard from "./pages/Dashboard";
 import Collaborators from "./pages/Collaborators";
 import Mascots from "./pages/Mascots";
 import CollaboratorCard from "./components/CollaboratorCard";
+import MascotCard from "./components/MascotCard";
 
 function App() {
   return (
@@ -11,6 +12,7 @@ function App() {
         <Route path="/" element={<Dashboard />} />
         <Route path="/collaborators" element={<Collaborators />} />
         <Route path="/collaborators/:id" element={<CollaboratorCard />} />
+        <Route path="/mascots/:id" element={<MascotCard />} />
         <Route path="/mascots" element={<Mascots />} />
       </Routes>
     </div>
