@@ -23,7 +23,8 @@ export default function CollaboratorList() {
     <ul>
       {collaborators.map((collab) => (
         <li key={collab._id}>
-          <CollaboratorCard />
+          {collab.name}
+          {/* <CollaboratorCard /> */}
         </li>
       ))}
     </ul>
