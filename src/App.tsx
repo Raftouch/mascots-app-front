@@ -4,16 +4,19 @@ import Collaborators from "./pages/Collaborators";
 import Mascots from "./pages/Mascots";
 import CollaboratorCard from "./components/CollaboratorCard";
 import MascotCard from "./components/MascotCard";
+import Layout from "./components/Layout";
 
 function App() {
   return (
     <div>
       <Routes>
-        <Route path="/" element={<Dashboard />} />
-        <Route path="/collaborators" element={<Collaborators />} />
-        <Route path="/collaborators/:id" element={<CollaboratorCard />} />
-        <Route path="/mascots/:id" element={<MascotCard />} />
-        <Route path="/mascots" element={<Mascots />} />
+        <Route element={<Layout />}>
+          <Route path="/" element={<Dashboard />} />
+          <Route path="/collaborators" element={<Collaborators />} />
+          <Route path="/collaborators/:id" element={<CollaboratorCard />} />
+          <Route path="/mascots/:id" element={<MascotCard />} />
+          <Route path="/mascots" element={<Mascots />} />
+        </Route>
       </Routes>
     </div>
   );
