@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import type { Mascot } from "../types/mascot";
 import MascotCard from "../components/MascotCard";
+import { getMascotById } from "../api/mascots";
 
 export default function MascotDetails() {
   const [mascot, setMascot] = useState<Mascot | null>(null);
@@ -9,10 +10,9 @@ export default function MascotDetails() {
 
   console.log("mascot id : ", id);
 
-  const getMascotDetails = async () => {
+  const getMascotDetails = async (id: string) => {
     try {
-      const res = await fetch(`http://localhost:4000/mascots/${id}`);
-      const data = await res.json();
+      const data = await getMascotById(id);
       console.log("mascot data : ", data.mascot);
       setMascot(data.mascot);
     } catch (error) {
@@ -21,7 +21,8 @@ export default function MascotDetails() {
   };
 
   useEffect(() => {
-    getMascotDetails();
+    if (!id) return;
+    getMascotDetails(id);
   }, [id]);
 
   return <MascotCard mascot={mascot} />;
