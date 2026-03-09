@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import type { Mascot } from "../types/mascot";
 
-export default function MascotCard() {
+export default function MascotDetails() {
   const [mascot, setMascot] = useState<Mascot | null>(null);
   const { id } = useParams();
 

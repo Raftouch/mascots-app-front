@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import type { Collaborator } from "../types/collaborator";
 import type { Mascot } from "../types/mascot";
 
-export default function CollaboratorCard() {
+export default function CollaboratorDetails() {
   const [collaborator, setCollaborator] = useState<Collaborator | null>(null);
   const [mascotsByCollaborator, setMascotsByCollaborator] = useState<Mascot[]>(
     [],

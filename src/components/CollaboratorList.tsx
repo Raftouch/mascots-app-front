@@ -1,25 +1,13 @@
-import { useEffect, useState } from "react";
-import type { Collaborator } from "../types/collaborator";
-import CollaboratorCard from "./CollaboratorCard";
 import { Link } from "react-router-dom";
+import type { Collaborator } from "../types/collaborator";
 
-export default function CollaboratorList() {
-  const [collaborators, setCollaborators] = useState<Collaborator[]>([]);
+interface CollaboratorListProps {
+  collaborators: Collaborator[];
+}
 
-  const fetchCollaborators = async () => {
-    try {
-      const res = await fetch("http://localhost:4000/collaborators");
-      const data = await res.json();
-      setCollaborators(data.collaborators);
-      console.log("data : ", data.collaborators);
-    } catch (error) {
-      console.error("Error fetching collaborators", error);
-    }
-  };
-  useEffect(() => {
-    fetchCollaborators();
-  }, []);
-
+export default function CollaboratorList({
+  collaborators,
+}: CollaboratorListProps) {
   return (
     <div className="max-w-3xl mx-auto p-6">
       <h1 className="text-3xl font-bold mb-6">Collaborators</h1>
