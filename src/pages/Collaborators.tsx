@@ -20,5 +20,7 @@ export default function Collaborators() {
     fetchCollaborators();
   }, []);
 
+  if (collaborators.length === 0) return <p>No collaborators found</p>;
+
   return <CollaboratorList collaborators={collaborators} />;
 }

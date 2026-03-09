@@ -20,5 +20,7 @@ export default function Mascots() {
     fetchMascots();
   }, []);
 
+  if (mascots.length === 0) return <p>No mascots found</p>;
+
   return <MascotList mascots={mascots} />;
 }
