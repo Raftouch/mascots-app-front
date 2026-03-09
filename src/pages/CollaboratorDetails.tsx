@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import type { Collaborator } from "../types/collaborator";
 import type { Mascot } from "../types/mascot";
 import CollaboratorCard from "../components/CollaboratorCard";
+import { getCollaboratorById } from "../api/collaborator";
 
 export default function CollaboratorDetails() {
   const [collaborator, setCollaborator] = useState<Collaborator | null>(null);
@@ -11,10 +12,9 @@ export default function CollaboratorDetails() {
   );
   const { id } = useParams();
 
-  const getCollaboratorDetails = async () => {
+  const getCollaboratorDetails = async (id: string) => {
     try {
-      const res = await fetch(`http://localhost:4000/collaborators/${id}`);
-      const data = await res.json();
+      const data = await getCollaboratorById(id);
       console.log("collab id : ", id);
       console.log("data : ", data.collaborator);
       console.log("data : ", data.mascotsByCollaborator);
@@ -26,7 +26,8 @@ export default function CollaboratorDetails() {
   };
 
   useEffect(() => {
-    getCollaboratorDetails();
+    if (!id) return;
+    getCollaboratorDetails(id);
   }, [id]);
 
   return (

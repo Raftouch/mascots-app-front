@@ -1,14 +1,14 @@
 import { useEffect, useState } from "react";
 import CollaboratorList from "../components/CollaboratorList";
 import type { Collaborator } from "../types/collaborator";
+import { getCollaborators } from "../api/collaborator";
 
 export default function Collaborators() {
   const [collaborators, setCollaborators] = useState<Collaborator[]>([]);
 
   const fetchCollaborators = async () => {
     try {
-      const res = await fetch("http://localhost:4000/collaborators");
-      const data = await res.json();
+      const data = await getCollaborators();
       setCollaborators(data.collaborators);
       console.log("data : ", data.collaborators);
     } catch (error) {
