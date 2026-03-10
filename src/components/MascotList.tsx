@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import type { Mascot } from "../types/mascot";
+import MascotCard from "./MascotCard";
 
 interface MascotListProps {
   mascots: Mascot[];
@@ -17,8 +18,7 @@ export default function MascotList({ mascots }: MascotListProps) {
             key={mascot._id}
           >
             <Link to={`/mascots/${mascot._id}`}>
-              {/* <MascotCard /> */}
-              <p className="font-medium">{mascot.name}</p>
+              <MascotCard mascot={mascot} />
             </Link>
           </li>
         ))}
