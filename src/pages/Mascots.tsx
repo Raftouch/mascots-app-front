@@ -5,10 +5,11 @@ import { getMascots } from "../api/mascots";
 
 export default function Mascots() {
   const [mascots, setMascots] = useState<Mascot[]>([]);
+  const [searchName, setSearchName] = useState("");
 
   const fetchMascots = async () => {
     try {
-      const data = await getMascots();
+      const data = await getMascots(searchName);
       setMascots(data.mascots);
       console.log("data mascots : ", data.mascots);
     } catch (error) {
@@ -18,9 +19,19 @@ export default function Mascots() {
 
   useEffect(() => {
     fetchMascots();
-  }, []);
+  }, [searchName]);
 
   if (mascots.length === 0) return <p>No mascots found</p>;
 
-  return <MascotList mascots={mascots} />;
+  return (
+    <>
+      <input
+        type="text"
+        className="border"
+        value={searchName}
+        onChange={(e) => setSearchName(e.target.value)}
+      />
+      <MascotList mascots={mascots} />
+    </>
+  );
 }

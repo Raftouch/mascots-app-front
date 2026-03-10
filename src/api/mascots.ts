@@ -1,7 +1,7 @@
 import { API_BASE_URL } from "../config/api";
 
-export const getMascots = async () => {
-  const res = await fetch(`${API_BASE_URL}/mascots`);
+export const getMascots = async (searchName: string) => {
+  const res = await fetch(`${API_BASE_URL}/mascots?name=${searchName}`);
   return res.json();
 };
 
