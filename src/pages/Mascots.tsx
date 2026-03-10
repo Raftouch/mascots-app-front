@@ -21,8 +21,6 @@ export default function Mascots() {
     fetchMascots();
   }, [searchName]);
 
-  if (mascots.length === 0) return <p>No mascots found</p>;
-
   return (
     <>
       <input
@@ -31,7 +29,12 @@ export default function Mascots() {
         value={searchName}
         onChange={(e) => setSearchName(e.target.value)}
       />
-      <MascotList mascots={mascots} />
+
+      {mascots.length === 0 ? (
+        <p>No mascots found</p>
+      ) : (
+        <MascotList mascots={mascots} />
+      )}
     </>
   );
 }
