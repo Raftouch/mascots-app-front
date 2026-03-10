@@ -1,7 +1,7 @@
 import type { Mascot } from "../types/mascot";
 
 interface MascotCardProps {
-  mascot: Mascot | null;
+  mascot: Mascot;
 }
 
 export default function MascotCard({ mascot }: MascotCardProps) {
@@ -11,9 +11,13 @@ export default function MascotCard({ mascot }: MascotCardProps) {
       <div className="p-4 rounded-lg bg-white shadow-sm hover:bg-gray-50 space-y-2">
         <p className="text-sm text-gray-600">{mascot?.breed}</p>
         <p className="text-sm text-gray-600">{mascot?.gender}</p>
-        {/* <p className="text-sm text-gray-600">{mascot?.birthDate}</p> */}
+        <p className="text-sm text-gray-600">
+          {new Date(mascot?.birthDate).toLocaleDateString()}
+        </p>
         <p className="text-sm text-gray-600">{mascot?.description}</p>
-        {/* <p className="text-sm text-gray-600">{mascot?.joinedAt}</p> */}
+        <p className="text-sm text-gray-600">
+          {new Date(mascot?.joinedAt).toLocaleDateString()}
+        </p>
         <p className="text-sm text-gray-600">{mascot?.collaborator.name}</p>
       </div>
     </div>

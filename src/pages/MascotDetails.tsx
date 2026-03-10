@@ -25,5 +25,7 @@ export default function MascotDetails() {
     getMascotDetails(id);
   }, [id]);
 
+  if (!mascot) return <p>No mascot found</p>;
+
   return <MascotCard mascot={mascot} />;
 }
