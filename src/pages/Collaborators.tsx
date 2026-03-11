@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import CollaboratorList from "../components/CollaboratorList";
 import type { Collaborator } from "../types/collaborator";
-import { getCollaborators } from "../api/collaborator";
+import { getCollaborators } from "../api/collaborators";
 
 export default function Collaborators() {
   const [collaborators, setCollaborators] = useState<Collaborator[]>([]);
