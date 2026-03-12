@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import type { Collaborator } from "../types/collaborator";
 import type { Mascot } from "../types/mascot";
 import CollaboratorCard from "../components/CollaboratorCard";
@@ -16,9 +16,6 @@ export default function CollaboratorDetails() {
     const getCollaboratorDetails = async (id: string) => {
       try {
         const data = await getCollaboratorById(id);
-        console.log("collab id : ", id);
-        console.log("data : ", data.collaborator);
-        console.log("data : ", data.mascotsByCollaborator);
         setCollaborator(data.collaborator);
         setMascotsByCollaborator(data.mascotsByCollaborator);
       } catch (error) {
@@ -31,9 +28,14 @@ export default function CollaboratorDetails() {
   }, [id]);
 
   return (
-    <CollaboratorCard
-      collaborator={collaborator}
-      mascotsByCollaborator={mascotsByCollaborator}
-    />
+    <>
+      <CollaboratorCard
+        collaborator={collaborator}
+        mascotsByCollaborator={mascotsByCollaborator}
+      />
+      <Link to={`/collaborators/${collaborator?._id}/mascots/new`}>
+        Add mascot
+      </Link>
+    </>
   );
 }
