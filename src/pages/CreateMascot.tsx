@@ -3,8 +3,7 @@ import { useParams } from "react-router-dom";
 import type { Collaborator } from "../types/collaborator";
 import { getCollaboratorById } from "../api/collaborators";
 import { createMascot } from "../api/mascots";
-
-type Gender = "Male" | "Female";
+import type { Gender } from "../types/mascot";
 
 export default function CreateMascot() {
   const [name, setName] = useState("");
