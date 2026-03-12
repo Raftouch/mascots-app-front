@@ -2,16 +2,18 @@ import { useEffect, useState } from "react";
 import MascotList from "../components/MascotList";
 import type { Mascot } from "../types/mascot";
 import { getMascots } from "../api/mascots";
+import { useDebounce } from "../hooks";
 
 export default function Mascots() {
   const [mascots, setMascots] = useState<Mascot[]>([]);
   const [searchName, setSearchName] = useState("");
   const [bornBefore, setBornBefore] = useState("");
   const [bornAfter, setBornAfter] = useState("");
+  const debouncedSearchName = useDebounce(searchName);
 
   const fetchMascots = async () => {
     try {
-      const data = await getMascots(searchName, bornBefore, bornAfter);
+      const data = await getMascots(debouncedSearchName, bornBefore, bornAfter);
       setMascots(data.mascots);
       console.log("data mascots : ", data.mascots);
     } catch (error) {
@@ -21,7 +23,7 @@ export default function Mascots() {
 
   useEffect(() => {
     fetchMascots();
-  }, [searchName, bornBefore, bornAfter]);
+  }, [debouncedSearchName, bornBefore, bornAfter]);
 
   return (
     <div className="max-w-3xl mx-auto p-6">
