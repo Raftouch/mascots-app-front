@@ -15,3 +15,11 @@ export const getMascotById = async (id: string) => {
   const res = await fetch(`${API_BASE_URL}/mascots/${id}`);
   return res.json();
 };
+
+export const createMascot = async (formData: FormData) => {
+  const res = await fetch(`${API_BASE_URL}/mascots`, {
+    method: "POST",
+    body: formData,
+  });
+  return res.json();
+};
