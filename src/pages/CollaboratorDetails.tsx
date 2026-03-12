@@ -12,20 +12,20 @@ export default function CollaboratorDetails() {
   );
   const { id } = useParams();
 
-  const getCollaboratorDetails = async (id: string) => {
-    try {
-      const data = await getCollaboratorById(id);
-      console.log("collab id : ", id);
-      console.log("data : ", data.collaborator);
-      console.log("data : ", data.mascotsByCollaborator);
-      setCollaborator(data.collaborator);
-      setMascotsByCollaborator(data.mascotsByCollaborator);
-    } catch (error) {
-      console.error("Error getting collaborator details", error);
-    }
-  };
-
   useEffect(() => {
+    const getCollaboratorDetails = async (id: string) => {
+      try {
+        const data = await getCollaboratorById(id);
+        console.log("collab id : ", id);
+        console.log("data : ", data.collaborator);
+        console.log("data : ", data.mascotsByCollaborator);
+        setCollaborator(data.collaborator);
+        setMascotsByCollaborator(data.mascotsByCollaborator);
+      } catch (error) {
+        console.error("Error getting collaborator details", error);
+      }
+    };
+
     if (!id) return;
     getCollaboratorDetails(id);
   }, [id]);

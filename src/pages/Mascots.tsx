@@ -11,17 +11,21 @@ export default function Mascots() {
   const [bornAfter, setBornAfter] = useState("");
   const debouncedSearchName = useDebounce(searchName);
 
-  const fetchMascots = async () => {
-    try {
-      const data = await getMascots(debouncedSearchName, bornBefore, bornAfter);
-      setMascots(data.mascots);
-      console.log("data mascots : ", data.mascots);
-    } catch (error) {
-      console.error("Error fetching mascots", error);
-    }
-  };
-
   useEffect(() => {
+    const fetchMascots = async () => {
+      try {
+        const data = await getMascots(
+          debouncedSearchName,
+          bornBefore,
+          bornAfter,
+        );
+        setMascots(data.mascots);
+        console.log("data mascots : ", data.mascots);
+      } catch (error) {
+        console.error("Error fetching mascots", error);
+      }
+    };
+
     fetchMascots();
   }, [debouncedSearchName, bornBefore, bornAfter]);
 

@@ -4,18 +4,18 @@ import type { Mascot } from "../types/mascot";
 export default function Dashboard() {
   const [lastAddedMascots, setLastAddedMascots] = useState<Mascot[]>([]);
 
-  const getDashboard = async () => {
-    try {
-      const res = await fetch("http://localhost:4000/dashboard");
-      const data = await res.json();
-      console.log("data", data.mascots);
-      setLastAddedMascots(data.mascots);
-    } catch (error) {
-      console.error("Error fetching mascots", error);
-    }
-  };
-
   useEffect(() => {
+    const getDashboard = async () => {
+      try {
+        const res = await fetch("http://localhost:4000/dashboard");
+        const data = await res.json();
+        console.log("data", data.mascots);
+        setLastAddedMascots(data.mascots);
+      } catch (error) {
+        console.error("Error fetching mascots", error);
+      }
+    };
+
     getDashboard();
   }, []);
 

@@ -10,17 +10,17 @@ export default function MascotDetails() {
 
   console.log("mascot id : ", id);
 
-  const getMascotDetails = async (id: string) => {
-    try {
-      const data = await getMascotById(id);
-      console.log("mascot data : ", data.mascot);
-      setMascot(data.mascot);
-    } catch (error) {
-      console.error("Error getting mascot details", error);
-    }
-  };
-
   useEffect(() => {
+    const getMascotDetails = async (id: string) => {
+      try {
+        const data = await getMascotById(id);
+        console.log("mascot data : ", data.mascot);
+        setMascot(data.mascot);
+      } catch (error) {
+        console.error("Error getting mascot details", error);
+      }
+    };
+
     if (!id) return;
     getMascotDetails(id);
   }, [id]);
