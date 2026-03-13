@@ -14,6 +14,10 @@ export default function MascotCard({ mascot }: MascotCardProps) {
         <p className="text-sm text-gray-600">
           {new Date(mascot?.birthDate).toLocaleDateString()}
         </p>
+        <img
+          src={`http://localhost:4000/uploads/mascotImages/${mascot.imageName}`}
+          alt={`Photo of ${mascot.name}`}
+        />
         <p className="text-sm text-gray-600">{mascot?.description}</p>
         <p className="text-sm text-gray-600">
           {new Date(mascot?.joinedAt).toLocaleDateString()}
