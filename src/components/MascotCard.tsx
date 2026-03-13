@@ -7,23 +7,37 @@ interface MascotCardProps {
 
 export default function MascotCard({ mascot }: MascotCardProps) {
   return (
-    <div className="max-w-3xl mx-auto p-6">
-      <h2 className="text-2xl font-bold mb-4">{mascot?.name}</h2>
-      <div className="p-4 rounded-lg bg-white shadow-sm hover:bg-gray-50 space-y-2">
-        <p className="text-sm text-gray-600">{mascot?.breed}</p>
-        <p className="text-sm text-gray-600">{mascot?.gender}</p>
-        <p className="text-sm text-gray-600">
-          {new Date(mascot?.birthDate).toLocaleDateString()}
-        </p>
+    <div className="max-w-md mx-auto p-6">
+      <div className="bg-white rounded-xl shadow-md overflow-hidden border border-gray-200">
         <img
+          className="w-full h-64 object-cover"
           src={`${API_BASE_URL}/uploads/mascotImages/${mascot.imageName}`}
           alt={`Photo of ${mascot.name}`}
         />
-        <p className="text-sm text-gray-600">{mascot?.description}</p>
-        <p className="text-sm text-gray-600">
-          {new Date(mascot?.joinedAt).toLocaleDateString()}
-        </p>
-        <p className="text-sm text-gray-600">{mascot?.collaborator.name}</p>
+        <div className="p-6 space-y-3">
+          <h2 className="text-2xl font-bold text-gray-800">{mascot?.name}</h2>
+          <div className="text-sm text-gray-600 space-y-1">
+            <p>
+              <span className="font-semibold">Breed:</span> {mascot?.breed}
+            </p>
+            <p>
+              <span className="font-semibold">Gender:</span> {mascot?.gender}
+            </p>
+            <p>
+              <span className="font-semibold">Birth date:</span>{" "}
+              {new Date(mascot?.birthDate).toLocaleDateString()}
+            </p>
+            <p>
+              <span className="font-semibold">Joined:</span>{" "}
+              {new Date(mascot?.joinedAt).toLocaleDateString()}
+            </p>
+            <p>
+              <span className="font-semibold">Owner:</span>{" "}
+              {mascot?.collaborator.name}
+            </p>
+          </div>
+          <p className="text-gray-700 pt-2 border-t">{mascot?.description}</p>
+        </div>
       </div>
     </div>
   );
