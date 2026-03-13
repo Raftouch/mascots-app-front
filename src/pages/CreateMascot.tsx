@@ -11,6 +11,7 @@ export default function CreateMascot() {
   const [gender, setGender] = useState<Gender | "">("");
   const [birthDate, setBirthDate] = useState("");
   const [description, setDescription] = useState("");
+  const [image, setImage] = useState<File | null>(null);
 
   const { id } = useParams();
 
@@ -42,6 +43,7 @@ export default function CreateMascot() {
     formData.append("breed", breed);
     formData.append("gender", gender);
     formData.append("birthDate", birthDate);
+    if (image) formData.append("image", image);
     formData.append("description", description);
     formData.append("collaborator", id!);
 
@@ -104,6 +106,19 @@ export default function CreateMascot() {
             type="date"
             name="birthDate"
             onChange={(e) => setBirthDate(e.target.value)}
+            required
+          />
+        </div>
+        <div>
+          <input
+            accept="image/*"
+            className="border"
+            type="file"
+            name="image"
+            onChange={(e) => {
+              if (e.target.files) setImage(e.target.files[0]);
+              console.log(e.target.files);
+            }}
             required
           />
         </div>
