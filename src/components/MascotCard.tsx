@@ -1,3 +1,4 @@
+import { API_BASE_URL } from "../config/api";
 import type { Mascot } from "../types/mascot";
 
 interface MascotCardProps {
@@ -15,7 +16,7 @@ export default function MascotCard({ mascot }: MascotCardProps) {
           {new Date(mascot?.birthDate).toLocaleDateString()}
         </p>
         <img
-          src={`http://localhost:4000/uploads/mascotImages/${mascot.imageName}`}
+          src={`${API_BASE_URL}/uploads/mascotImages/${mascot.imageName}`}
           alt={`Photo of ${mascot.name}`}
         />
         <p className="text-sm text-gray-600">{mascot?.description}</p>
