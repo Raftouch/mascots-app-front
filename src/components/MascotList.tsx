@@ -1,6 +1,5 @@
 import { Link } from "react-router-dom";
 import type { Mascot } from "../types/mascot";
-import MascotCard from "./MascotCard";
 import MascotCardSimple from "./MascotCardSimplified";
 
 interface MascotListProps {

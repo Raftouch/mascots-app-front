@@ -18,7 +18,7 @@ export default function MascotCardSimplified({ mascot }: MascotCardProps) {
           alt={`Photo of ${mascot.name}`}
         />
         <div className="p-4 flex flex-col justify-center space-y-1">
-          <h2 className="text-2l font-bold text-gray-800">{mascot?.name}</h2>
+          <h2 className="text-xl font-bold text-gray-800">{mascot?.name}</h2>
           <p className="text-sm text-gray-600">
             <span className="font-semibold">Breed:</span> {mascot?.breed}
           </p>
