@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import type { Mascot } from "../types/mascot";
+import MascotCardSimplified from "../components/MascotCardSimplified";
 
 export default function Dashboard() {
   const [lastAddedMascots, setLastAddedMascots] = useState<Mascot[]>([]);
@@ -23,18 +24,13 @@ export default function Dashboard() {
     <div className="max-w-3xl mx-auto p-6">
       <h1 className="text-3xl font-bold mb-6">Dashboard</h1>
       <div className="bg-white shadow-md rounded-xl p-5">
-        <h2 className="text-xl font-semibold mb-4">Recently added :</h2>
+        <h2 className="text-xl font-semibold mb-4">Recently joined :</h2>
 
-        <ul className="space-y-2">
+        <div className="space-y-2">
           {lastAddedMascots.map((mascot) => (
-            <li
-              className="p-3 rounded-lg border border-gray-200"
-              key={mascot._id}
-            >
-              <p>{mascot.name}</p>
-            </li>
+            <MascotCardSimplified key={mascot._id} mascot={mascot} />
           ))}
-        </ul>
+        </div>
       </div>
     </div>
   );
