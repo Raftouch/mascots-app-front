@@ -61,35 +61,40 @@ export default function CreateMascot() {
   };
 
   return (
-    <div>
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label>Name</label>
+    <div className="max-w-xl mx-auto mt-10 p-6 bg-white shadow-md rounded-lg">
+      <h2 className="text-2xl font-bold mb-6 text-gray-800">Add New Mascot</h2>
+      <form className="space-y-4" onSubmit={handleSubmit}>
+        <div className="flex flex-col">
+          <label className="text-sm font-medium text-gray-700 mb-1">Name</label>
           <input
             value={name}
-            className="border"
+            className="border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
             type="text"
             name="name"
             onChange={(e) => setName(e.target.value)}
             required
           />
         </div>
-        <div>
-          <label>Breed</label>
+        <div className="flex flex-col">
+          <label className="text-sm font-medium text-gray-700 mb-1">
+            Breed
+          </label>
           <input
             value={breed}
-            className="border"
+            className="border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
             type="text"
             name="breed"
             onChange={(e) => setBreed(e.target.value)}
             required
           />
         </div>
-        <div>
-          <label>Gender</label>
+        <div className="flex flex-col">
+          <label className="text-sm font-medium text-gray-700 mb-1">
+            Gender
+          </label>
           <select
             value={gender}
-            className="border"
+            className="border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
             onChange={(e) => setGender(e.target.value as Gender)}
             required
           >
@@ -100,21 +105,26 @@ export default function CreateMascot() {
             <option value="Female">Female</option>
           </select>
         </div>
-        <div>
-          <label>Birthdate</label>
+        <div className="flex flex-col">
+          <label className="text-sm font-medium text-gray-700 mb-1">
+            Birthdate
+          </label>
           <input
             value={birthDate}
-            className="border"
+            className="border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
             type="date"
             name="birthDate"
             onChange={(e) => setBirthDate(e.target.value)}
             required
           />
         </div>
-        <div>
+        <div className="flex flex-col">
+          <label className="text-sm font-medium text-gray-700 mb-1">
+            Photo
+          </label>
           <input
             accept="image/*"
-            className="border"
+            className="border border-gray-300 rounded-md p-2 file:mr-3 file:py-1 file:px-3 file:border-0 file:bg-blue-50 file:text-blue-600 hover:file:bg-blue-100"
             type="file"
             name="image"
             onChange={(e) => {
@@ -124,27 +134,36 @@ export default function CreateMascot() {
             required
           />
         </div>
-        <div>
-          <label>Description</label>
+        <div className="flex flex-col">
+          <label className="text-sm font-medium text-gray-700 mb-1">
+            Description
+          </label>
           <textarea
             value={description}
-            className="border"
+            className="border border-gray-300 rounded-md px-3 py-2 min-h-[100px] focus:outline-none focus:ring-2 focus:ring-blue-500"
             name="description"
             onChange={(e) => setDescription(e.target.value)}
             required
           />
         </div>
-        <div>
-          <label>Collaborator</label>
+        <div className="flex flex-col">
+          <label className="text-sm font-medium text-gray-700 mb-1">
+            Collaborator
+          </label>
           <input
             value={collaborator?.name || ""}
-            className="border"
+            className="border border-gray-200 rounded-md px-3 py-2 bg-gray-100 text-gray-600"
             type="text"
             name="collaborator"
             disabled
           />
         </div>
-        <button>Submit</button>
+        <button
+          type="submit"
+          className="w-full bg-blue-600 text-white py-2 rounded-md font-medium hover:bg-blue-700 cursor-pointer"
+        >
+          Submit
+        </button>
       </form>
     </div>
   );
