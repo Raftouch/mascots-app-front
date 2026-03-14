@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import type { Collaborator } from "../types/collaborator";
 import { getCollaboratorById } from "../api/collaborators";
 import { createMascot } from "../api/mascots";
@@ -14,6 +14,7 @@ export default function CreateMascot() {
   const [image, setImage] = useState<File | null>(null);
 
   const { id } = useParams();
+  const navigate = useNavigate();
 
   //   const [searchParams] = useSearchParams();
   //   const collaboratorId = searchParams.get("collaborator");
@@ -53,6 +54,7 @@ export default function CreateMascot() {
       await createMascot(formData);
       console.log("Mascot : ", Object.fromEntries(formData));
       alert("Mascot created");
+      if (id) navigate(`/collaborators/${id}`, { replace: true });
     } catch (error) {
       console.error("Error creating mascot", error);
     }
