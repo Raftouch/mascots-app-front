@@ -14,8 +14,8 @@ export default function MascotList({ mascots }: MascotListProps) {
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {mascots.map((mascot) => (
-          <Link to={`/mascots/${mascot._id}`}>
-            <MascotCardSimple key={mascot._id} mascot={mascot} />
+          <Link key={mascot._id} to={`/mascots/${mascot._id}`}>
+            <MascotCardSimple mascot={mascot} />
           </Link>
         ))}
       </div>
