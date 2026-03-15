@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import type { Mascot } from "../types/mascot";
 import MascotCard from "../components/MascotCard";
 import { getMascotById } from "../api/mascots";
+import { API_BASE_URL } from "../config/api";
 
 export default function MascotDetails() {
   const [mascot, setMascot] = useState<Mascot | null>(null);
@@ -27,5 +28,10 @@ export default function MascotDetails() {
 
   if (!mascot) return <p>No mascot found</p>;
 
-  return <MascotCard mascot={mascot} />;
+  return (
+    <>
+      <MascotCard mascot={mascot} />
+      <Link to={`/mascots/${id}/edit`}>Edit Mascot details</Link>
+    </>
+  );
 }

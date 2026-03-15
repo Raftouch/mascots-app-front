@@ -6,6 +6,7 @@ import CollaboratorCard from "./pages/CollaboratorDetails";
 import MascotCard from "./pages/MascotDetails";
 import Layout from "./components/Layout";
 import CreateMascot from "./pages/CreateMascot";
+import EditMascot from "./pages/EditMascot";
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
           <Route path="/collaborators" element={<Collaborators />} />
           <Route path="/collaborators/:id" element={<CollaboratorCard />} />
           <Route path="/mascots/:id" element={<MascotCard />} />
+          <Route path="/mascots/:id/edit" element={<EditMascot />} />
           <Route path="/mascots" element={<Mascots />} />
           <Route
             path="/collaborators/:id/mascots/new"
