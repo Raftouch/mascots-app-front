@@ -23,3 +23,11 @@ export const createMascot = async (formData: FormData) => {
   });
   return res.json();
 };
+
+export const updateMascot = async (id: string, formData: FormData) => {
+  const res = await fetch(`${API_BASE_URL}/mascots/${id}`, {
+    method: "PUT",
+    body: formData,
+  });
+  return res.json();
+};
