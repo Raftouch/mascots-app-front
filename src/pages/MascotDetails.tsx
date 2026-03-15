@@ -3,7 +3,6 @@ import { Link, useParams } from "react-router-dom";
 import type { Mascot } from "../types/mascot";
 import MascotCard from "../components/MascotCard";
 import { getMascotById } from "../api/mascots";
-import { API_BASE_URL } from "../config/api";
 
 export default function MascotDetails() {
   const [mascot, setMascot] = useState<Mascot | null>(null);
@@ -31,7 +30,12 @@ export default function MascotDetails() {
   return (
     <>
       <MascotCard mascot={mascot} />
-      <Link to={`/mascots/${id}/edit`}>Edit Mascot details</Link>
+      <Link
+        className="px-4 py-2 bg-gray-800 text-white rounded-md hover:bg-gray-900 font-medium"
+        to={`/mascots/${id}/edit`}
+      >
+        Edit Mascot details
+      </Link>
     </>
   );
 }

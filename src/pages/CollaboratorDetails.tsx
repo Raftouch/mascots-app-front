@@ -33,7 +33,10 @@ export default function CollaboratorDetails() {
         collaborator={collaborator}
         mascotsByCollaborator={mascotsByCollaborator}
       />
-      <Link to={`/collaborators/${collaborator?._id}/mascots/new`}>
+      <Link
+        className="px-4 py-2 bg-gray-800 text-white rounded-md hover:bg-gray-900 font-medium"
+        to={`/collaborators/${collaborator?._id}/mascots/new`}
+      >
         Add mascot
       </Link>
     </>
