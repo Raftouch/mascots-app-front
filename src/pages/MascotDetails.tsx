@@ -28,7 +28,7 @@ export default function MascotDetails() {
   if (!mascot) return <p>No mascot found</p>;
 
   return (
-    <>
+    <div className="flex flex-col items-center max-w-md mx-auto p-6 bg-gray-50 rounded-lg shadow-md space-y-4">
       <MascotCard mascot={mascot} />
       <Link
         className="px-4 py-2 bg-gray-800 text-white rounded-md hover:bg-gray-900 font-medium"
@@ -36,6 +36,6 @@ export default function MascotDetails() {
       >
         Edit Mascot details
       </Link>
-    </>
+    </div>
   );
 }
