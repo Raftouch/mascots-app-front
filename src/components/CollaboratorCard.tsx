@@ -12,19 +12,16 @@ export default function CollaboratorCard({
   mascotsByCollaborator,
 }: CollaboratorCardProps) {
   return (
-    <div className="max-w-3xl mx-auto p-6">
+    <>
       <h2 className="text-2xl font-bold mb-4">{collaborator?.name}</h2>
 
-      <ul className="space-y-4">
+      <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         {mascotsByCollaborator.map((mascot) => (
-          <li
-            className="p-4 rounded-lg bg-white shadow-sm hover:bg-gray-50 space-y-2"
-            key={mascot._id}
-          >
+          <li key={mascot._id}>
             <MascotCard mascot={mascot} />
           </li>
         ))}
       </ul>
-    </div>
+    </>
   );
 }
