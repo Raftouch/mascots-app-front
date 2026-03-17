@@ -31,3 +31,10 @@ export const updateMascot = async (id: string, formData: FormData) => {
   });
   return res.json();
 };
+
+export const removeMascot = async (id: string) => {
+  const res = await fetch(`${API_BASE_URL}/mascots/${id}`, {
+    method: "DELETE",
+  });
+  return res.json();
+};
