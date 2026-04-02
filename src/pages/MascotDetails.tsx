@@ -3,9 +3,11 @@ import { Link, useParams } from "react-router-dom";
 import type { Mascot } from "../types/mascot";
 import MascotCard from "../components/MascotCard";
 import { getMascotById, removeMascot } from "../api/mascots";
+import Modal from "../components/Modal";
 
 export default function MascotDetails() {
   const [mascot, setMascot] = useState<Mascot | null>(null);
+  const [modal, setModal] = useState(false);
   const { id } = useParams();
 
   console.log("mascot id : ", id);
@@ -39,11 +41,13 @@ export default function MascotDetails() {
         </Link>
         <button
           className="px-4 py-2 bg-red-700 text-white rounded-md hover:bg-red-800 font-medium"
-          onClick={() => removeMascot(mascot._id)}
+          onClick={() => setModal(true)}
+          // onClick={() => removeMascot(mascot._id)}
         >
           Delete mascot
         </button>
       </div>
+      {modal && <Modal />}
     </div>
   );
 }
