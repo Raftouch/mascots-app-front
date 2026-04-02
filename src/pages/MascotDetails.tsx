@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import type { Mascot } from "../types/mascot";
 import MascotCard from "../components/MascotCard";
-import { getMascotById } from "../api/mascots";
+import { getMascotById, removeMascot } from "../api/mascots";
 
 export default function MascotDetails() {
   const [mascot, setMascot] = useState<Mascot | null>(null);
@@ -30,12 +30,20 @@ export default function MascotDetails() {
   return (
     <div className="flex flex-col items-center max-w-md mx-auto p-6 bg-gray-50 rounded-lg shadow-md space-y-4">
       <MascotCard mascot={mascot} />
-      <Link
-        className="px-4 py-2 bg-gray-800 text-white rounded-md hover:bg-gray-900 font-medium"
-        to={`/mascots/${id}/edit`}
-      >
-        Edit Mascot details
-      </Link>
+      <div className="w-full flex items-center justify-between">
+        <Link
+          className="px-4 py-2 bg-gray-800 text-white rounded-md hover:bg-gray-900 font-medium"
+          to={`/mascots/${id}/edit`}
+        >
+          Edit Mascot details
+        </Link>
+        <button
+          className="px-4 py-2 bg-red-700 text-white rounded-md hover:bg-red-800 font-medium"
+          onClick={() => removeMascot(mascot._id)}
+        >
+          Delete mascot
+        </button>
+      </div>
     </div>
   );
 }
