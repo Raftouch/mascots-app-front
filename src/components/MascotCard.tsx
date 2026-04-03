@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { API_BASE_URL } from "../config/api";
 import type { Mascot } from "../types/mascot";
 
@@ -10,11 +11,13 @@ export default function MascotCard({ mascot }: MascotCardProps) {
     // <div className="max-w-md mx-auto p-6">
     // <div className="bg-white rounded-xl shadow-md overflow-hidden border border-gray-200">
     <div className="w-full bg-white rounded-xl shadow-md overflow-hidden border border-gray-200">
-      <img
-        className="w-full h-64 object-cover"
-        src={`${API_BASE_URL}/uploads/mascotImages/${mascot.imageName}`}
-        alt={`Photo of ${mascot.name}`}
-      />
+      <Link to={`/mascots/${mascot._id}`}>
+        <img
+          className="w-full h-64 object-cover"
+          src={`${API_BASE_URL}/uploads/mascotImages/${mascot.imageName}`}
+          alt={`Photo of ${mascot.name}`}
+        />
+      </Link>
       <div className="p-6 space-y-3">
         <h2 className="text-2xl font-bold text-gray-800">{mascot?.name}</h2>
         <div className="text-sm text-gray-600 space-y-1">
