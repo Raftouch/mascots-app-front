@@ -42,12 +42,16 @@ export default function MascotDetails() {
         <button
           className="px-4 py-2 bg-red-700 text-white rounded-md hover:bg-red-800 font-medium"
           onClick={() => setModal(true)}
-          // onClick={() => removeMascot(mascot._id)}
         >
           Delete mascot
         </button>
       </div>
-      {modal && <Modal />}
+      {modal && (
+        <Modal
+          onDelete={() => removeMascot(mascot._id)}
+          onClose={() => setModal(false)}
+        />
+      )}
     </div>
   );
 }
