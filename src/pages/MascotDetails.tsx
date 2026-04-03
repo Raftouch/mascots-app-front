@@ -13,6 +13,7 @@ export default function MascotDetails() {
   const navigate = useNavigate();
 
   console.log("mascot id : ", id);
+  console.log("mascot: ", mascot);
 
   useEffect(() => {
     const getMascotDetails = async (id: string) => {
@@ -52,7 +53,9 @@ export default function MascotDetails() {
         <Modal
           onDelete={() => removeMascot(mascot._id)}
           onClose={() => setModal(false)}
-          onRedirect={() => navigate("/mascots")}
+          onRedirect={() =>
+            navigate(`/collaborators/${mascot.collaborator._id}`)
+          }
         />
       )}
     </div>
