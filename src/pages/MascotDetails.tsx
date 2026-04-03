@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import type { Mascot } from "../types/mascot";
 import MascotCard from "../components/MascotCard";
 import { getMascotById, removeMascot } from "../api/mascots";
@@ -9,6 +9,8 @@ export default function MascotDetails() {
   const [mascot, setMascot] = useState<Mascot | null>(null);
   const [modal, setModal] = useState(false);
   const { id } = useParams();
+
+  const navigate = useNavigate();
 
   console.log("mascot id : ", id);
 
@@ -50,6 +52,7 @@ export default function MascotDetails() {
         <Modal
           onDelete={() => removeMascot(mascot._id)}
           onClose={() => setModal(false)}
+          onRedirect={() => navigate("/mascots")}
         />
       )}
     </div>

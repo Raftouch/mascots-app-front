@@ -1,9 +1,10 @@
 interface ModalProps {
   onDelete: () => void;
   onClose: () => void;
+  onRedirect: () => void;
 }
 
-export default function Modal({ onDelete, onClose }: ModalProps) {
+export default function Modal({ onDelete, onClose, onRedirect }: ModalProps) {
   return (
     <>
       <div
@@ -18,6 +19,7 @@ export default function Modal({ onDelete, onClose }: ModalProps) {
             onClick={() => {
               onDelete();
               onClose();
+              onRedirect();
             }}
           >
             Yes
