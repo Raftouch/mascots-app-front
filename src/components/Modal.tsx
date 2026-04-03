@@ -15,7 +15,10 @@ export default function Modal({ onDelete, onClose }: ModalProps) {
         <div className="flex justify-center gap-20">
           <button
             className="border rounded px-4 py-2 bg-green-500"
-            onClick={onDelete}
+            onClick={() => {
+              onDelete();
+              onClose();
+            }}
           >
             Yes
           </button>
