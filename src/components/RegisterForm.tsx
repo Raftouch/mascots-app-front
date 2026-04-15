@@ -15,24 +15,10 @@ export default function RegisterForm() {
   const [message, setMessage] = useState("");
   const [errors, setErrors] = useState<ValidationError[]>([]);
 
-  const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setForm((prev) => ({
       ...prev,
-      name: e.target.value,
-    }));
-  };
-
-  const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setForm((prev) => ({
-      ...prev,
-      email: e.target.value,
-    }));
-  };
-
-  const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setForm((prev) => ({
-      ...prev,
-      password: e.target.value,
+      [e.target.name]: e.target.value,
     }));
   };
 
@@ -85,13 +71,9 @@ export default function RegisterForm() {
       )}
 
       <form onSubmit={handleSubmit}>
-        <input name="name" value={form.name} onChange={handleNameChange} />
-        <input name="email" value={form.email} onChange={handleEmailChange} />
-        <input
-          name="password"
-          value={form.password}
-          onChange={handlePasswordChange}
-        />
+        <input name="name" value={form.name} onChange={handleChange} />
+        <input name="email" value={form.email} onChange={handleChange} />
+        <input name="password" value={form.password} onChange={handleChange} />
         <button type="submit">Register</button>
       </form>
     </div>
