@@ -7,6 +7,7 @@ import MascotCard from "./pages/MascotDetails";
 import Layout from "./components/Layout";
 import CreateMascot from "./pages/CreateMascot";
 import EditMascot from "./pages/EditMascot";
+import RegisterPage from "./pages/RegisterPage";
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
       <Routes>
         <Route element={<Layout />}>
           <Route path="/" element={<Dashboard />} />
+          <Route path="/register" element={<RegisterPage />} />
           <Route path="/collaborators" element={<Collaborators />} />
           <Route path="/collaborators/:id" element={<CollaboratorCard />} />
           <Route path="/mascots/:id" element={<MascotCard />} />
