@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { API_BASE_URL } from "../config/api";
+import { useNavigate } from "react-router-dom";
 
 type ValidationError = {
   msg: string;
@@ -14,6 +15,8 @@ export default function RegisterForm() {
 
   const [message, setMessage] = useState("");
   const [errors, setErrors] = useState<ValidationError[]>([]);
+
+  const navigate = useNavigate();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setForm((prev) => ({
@@ -50,6 +53,10 @@ export default function RegisterForm() {
 
       setMessage(data.message);
       setForm({ name: "", email: "", password: "" });
+
+      setTimeout(() => {
+        navigate("/login");
+      }, 2000);
     } catch (err) {
       console.error(err);
       setMessage("Server connection error");
