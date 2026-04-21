@@ -1,10 +1,6 @@
 import { useState } from "react";
 import { API_BASE_URL } from "../config/api";
 
-type ValidationError = {
-  msg: string;
-};
-
 export default function LoginForm() {
   const [form, setForm] = useState({
     email: "",
@@ -12,7 +8,7 @@ export default function LoginForm() {
   });
 
   const [message, setMessage] = useState("");
-  const [errors, setErrors] = useState<ValidationError[]>([]);
+  const [isError, setIsError] = useState(false);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setForm((prev) => ({
@@ -25,7 +21,7 @@ export default function LoginForm() {
     e.preventDefault();
 
     setMessage("");
-    setErrors([]);
+    setIsError(false);
 
     try {
       const response = await fetch(`${API_BASE_URL}/login`, {
@@ -40,10 +36,12 @@ export default function LoginForm() {
       const data = await response.json();
 
       if (!response.ok) {
+        setIsError(true);
         setMessage(data.message || "Login failed");
         return;
       }
 
+      setIsError(false);
       setMessage(data.message);
 
       console.log("Logged in user:", data.user);
@@ -51,6 +49,7 @@ export default function LoginForm() {
       setForm({ email: "", password: "" });
     } catch (err) {
       console.error(err);
+      setIsError(true);
       setMessage("Server connection error");
     }
   };
@@ -60,21 +59,11 @@ export default function LoginForm() {
       <h2 className="text-2xl font-bold mb-6 text-gray-800">Login</h2>
 
       {message && (
-        <p className="mb-4 px-3 py-2 rounded-md text-sm font-medium bg-green-50 text-green-700 border border-green-200">
+        <p
+          className={`mb-4 px-3 py-2 rounded-md text-sm font-medium border ${isError ? "bg-red-50 text-red-600 border-red-200" : "bg-green-50 text-green-700 border-green-200"}`}
+        >
           {message}
         </p>
-      )}
-
-      {errors.length > 0 && (
-        <div className="mb-4 px-3 py-2 rounded-md bg-red-50 border border-red-200">
-          <ul>
-            {errors.map((err, index) => (
-              <li key={index} className="text-sm text-red-600 font-medium">
-                • {err.msg}
-              </li>
-            ))}
-          </ul>
-        </div>
       )}
 
       <form className="space-y-4" onSubmit={handleSubmit}>
