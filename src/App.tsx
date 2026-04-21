@@ -8,6 +8,7 @@ import Layout from "./components/Layout";
 import CreateMascot from "./pages/CreateMascot";
 import EditMascot from "./pages/EditMascot";
 import RegisterPage from "./pages/RegisterPage";
+import LoginPage from "./pages/LoginPage";
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
         <Route element={<Layout />}>
           <Route path="/" element={<Dashboard />} />
           <Route path="/register" element={<RegisterPage />} />
+          <Route path="/login" element={<LoginPage />} />
           <Route path="/collaborators" element={<Collaborators />} />
           <Route path="/collaborators/:id" element={<CollaboratorCard />} />
           <Route path="/mascots/:id" element={<MascotCard />} />
