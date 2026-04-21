@@ -83,6 +83,7 @@ export default function RegisterForm() {
           <label className="text-sm font-medium text-gray-700 mb-1">Name</label>
           <input
             name="name"
+            type="text"
             value={form.name}
             className="border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
             onChange={handleChange}
@@ -94,6 +95,7 @@ export default function RegisterForm() {
           </label>
           <input
             name="email"
+            type="email"
             value={form.email}
             className="border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
             onChange={handleChange}
@@ -105,6 +107,7 @@ export default function RegisterForm() {
           </label>
           <input
             name="password"
+            type="password"
             value={form.password}
             className="border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
             onChange={handleChange}
