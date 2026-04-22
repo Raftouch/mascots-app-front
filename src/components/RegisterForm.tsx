@@ -90,8 +90,14 @@ export default function RegisterForm() {
 
       <form className="space-y-4" onSubmit={handleSubmit}>
         <div className="flex flex-col">
-          <label className="text-sm font-medium text-gray-700 mb-1">Name</label>
+          <label
+            htmlFor="name"
+            className="text-sm font-medium text-gray-700 mb-1"
+          >
+            Name
+          </label>
           <input
+            id="name"
             name="name"
             type="text"
             value={form.name}
@@ -100,10 +106,14 @@ export default function RegisterForm() {
           />
         </div>
         <div className="flex flex-col">
-          <label className="text-sm font-medium text-gray-700 mb-1">
+          <label
+            htmlFor="email"
+            className="text-sm font-medium text-gray-700 mb-1"
+          >
             Email
           </label>
           <input
+            id="email"
             name="email"
             type="email"
             value={form.email}
@@ -112,10 +122,14 @@ export default function RegisterForm() {
           />
         </div>
         <div className="flex flex-col">
-          <label className="text-sm font-medium text-gray-700 mb-1">
+          <label
+            htmlFor="password"
+            className="text-sm font-medium text-gray-700 mb-1"
+          >
             Password
           </label>
           <input
+            id="password"
             name="password"
             type="password"
             value={form.password}
