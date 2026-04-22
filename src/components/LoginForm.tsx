@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { API_BASE_URL } from "../config/api";
+import { useLocation } from "react-router-dom";
 
 export default function LoginForm() {
   const [form, setForm] = useState({
@@ -9,6 +10,9 @@ export default function LoginForm() {
 
   const [message, setMessage] = useState("");
   const [isError, setIsError] = useState(false);
+
+  const location = useLocation();
+  const successMessage = location.state?.successMessage;
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setForm((prev) => ({
@@ -57,6 +61,12 @@ export default function LoginForm() {
   return (
     <div className="max-w-xl mx-auto mt-10 p-6 bg-white shadow-md rounded-lg">
       <h2 className="text-2xl font-bold mb-6 text-gray-800">Login</h2>
+
+      {successMessage && (
+        <p className="mb-4 px-3 py-2 rounded-md text-sm font-medium bg-green-50 text-green-700 border border-green-200">
+          {successMessage}
+        </p>
+      )}
 
       {message && (
         <p

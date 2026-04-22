@@ -54,9 +54,12 @@ export default function RegisterForm() {
       setMessage(data.message);
       setForm({ name: "", email: "", password: "" });
 
-      setTimeout(() => {
-        navigate("/login");
-      }, 2000);
+      // setTimeout(() => {
+      //   navigate("/login");
+      // }, 2000);
+      navigate("/login", {
+        state: { successMessage: "Account created successfully" },
+      });
     } catch (err) {
       console.error(err);
       setMessage("Server connection error");
