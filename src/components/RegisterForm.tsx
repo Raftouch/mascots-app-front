@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { API_BASE_URL } from "../config/api";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 type ValidationError = {
   msg: string;
@@ -54,12 +54,9 @@ export default function RegisterForm() {
       setMessage(data.message);
       setForm({ name: "", email: "", password: "" });
 
-      // setTimeout(() => {
-      //   navigate("/login");
-      // }, 2000);
-      navigate("/login", {
-        state: { successMessage: "Account created successfully" },
-      });
+      setTimeout(() => {
+        navigate("/login");
+      }, 2000);
     } catch (err) {
       console.error(err);
       setMessage("Server connection error");
