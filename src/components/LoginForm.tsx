@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { API_BASE_URL } from "../config/api";
 import { useLocation } from "react-router-dom";
+import FormInput from "./UI/FormInput";
 
 export default function LoginForm() {
   const [form, setForm] = useState({
@@ -75,40 +76,23 @@ export default function LoginForm() {
           {message}
         </p>
       )}
-
       <form className="space-y-4" onSubmit={handleSubmit}>
-        <div className="flex flex-col">
-          <label
-            htmlFor="email"
-            className="text-sm font-medium text-gray-700 mb-1"
-          >
-            Email
-          </label>
-          <input
-            id="email"
-            name="email"
-            type="email"
-            value={form.email}
-            className="border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-            onChange={handleChange}
-          />
-        </div>
-        <div className="flex flex-col">
-          <label
-            htmlFor="password"
-            className="text-sm font-medium text-gray-700 mb-1"
-          >
-            Password
-          </label>
-          <input
-            id="password"
-            name="password"
-            type="password"
-            value={form.password}
-            className="border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-            onChange={handleChange}
-          />
-        </div>
+        <FormInput
+          id="email"
+          label="Email"
+          name="email"
+          type="email"
+          value={form.email}
+          onChange={handleChange}
+        />
+        <FormInput
+          id="password"
+          label="Password"
+          name="password"
+          type="password"
+          value={form.password}
+          onChange={handleChange}
+        />
         <button
           type="submit"
           className="w-full bg-blue-600 text-white py-2 rounded-md font-medium hover:bg-blue-700 cursor-pointer"
