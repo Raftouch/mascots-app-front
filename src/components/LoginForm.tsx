@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { API_BASE_URL } from "../config/api";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import FormInput from "./UI/FormInput";
 import FormButton from "./UI/FormButton";
 
@@ -13,6 +13,7 @@ export default function LoginForm() {
   const [message, setMessage] = useState("");
   const [isError, setIsError] = useState(false);
 
+  const navigate = useNavigate();
   const location = useLocation();
   const successMessage = location.state?.successMessage;
 
@@ -53,6 +54,8 @@ export default function LoginForm() {
       console.log("Logged in user:", data.user);
 
       setForm({ email: "", password: "" });
+
+      navigate("/");
     } catch (err) {
       console.error(err);
       setIsError(true);
