@@ -2,6 +2,7 @@ import { useState } from "react";
 import { API_BASE_URL } from "../config/api";
 import { useLocation } from "react-router-dom";
 import FormInput from "./UI/FormInput";
+import FormButton from "./UI/FormButton";
 
 export default function LoginForm() {
   const [form, setForm] = useState({
@@ -93,12 +94,7 @@ export default function LoginForm() {
           value={form.password}
           onChange={handleChange}
         />
-        <button
-          type="submit"
-          className="w-full bg-blue-600 text-white py-2 rounded-md font-medium hover:bg-blue-700 cursor-pointer"
-        >
-          Login
-        </button>
+        <FormButton>Login</FormButton>
       </form>
     </div>
   );

@@ -2,6 +2,7 @@ import { useState } from "react";
 import { API_BASE_URL } from "../config/api";
 import { useNavigate } from "react-router-dom";
 import FormInput from "./UI/FormInput";
+import FormButton from "./UI/FormButton";
 
 type ValidationError = {
   msg: string;
@@ -114,12 +115,7 @@ export default function RegisterForm() {
           value={form.password}
           onChange={handleChange}
         />
-        <button
-          type="submit"
-          className="w-full bg-blue-600 text-white py-2 rounded-md font-medium hover:bg-blue-700 cursor-pointer"
-        >
-          Register
-        </button>
+        <FormButton>Register</FormButton>
       </form>
     </div>
   );
