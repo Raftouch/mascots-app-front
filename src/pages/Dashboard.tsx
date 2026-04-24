@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import type { Mascot } from "../types/mascot";
 import MascotCardSimplified from "../components/MascotCardSimplified";
 import { API_BASE_URL } from "../config/api";
+import { Navigate } from "react-router-dom";
 
 type User = {
   _id: string;
@@ -10,6 +11,7 @@ type User = {
 export default function Dashboard() {
   const [lastAddedMascots, setLastAddedMascots] = useState<Mascot[]>([]);
   const [user, setUser] = useState<User | null>(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const getUser = async () => {
@@ -31,6 +33,8 @@ export default function Dashboard() {
       } catch (error) {
         setUser(null);
         console.error("Error fetching user", error);
+      } finally {
+        setLoading(false);
       }
     };
 
@@ -55,6 +59,9 @@ export default function Dashboard() {
 
     getDashboard();
   }, [user]);
+
+  if (loading) return <p>Loading...</p>;
+  if (!user) return <Navigate to="/login" />;
 
   return (
     <div className="max-w-3xl mx-auto p-6">
