@@ -1,14 +1,50 @@
 import { useEffect, useState } from "react";
 import type { Mascot } from "../types/mascot";
 import MascotCardSimplified from "../components/MascotCardSimplified";
+import { API_BASE_URL } from "../config/api";
+
+type User = {
+  _id: string;
+};
 
 export default function Dashboard() {
   const [lastAddedMascots, setLastAddedMascots] = useState<Mascot[]>([]);
+  const [user, setUser] = useState<User | null>(null);
 
   useEffect(() => {
+    const getUser = async () => {
+      try {
+        const res = await fetch(`${API_BASE_URL}/me`, {
+          credentials: "include",
+        });
+
+        if (!res.ok) {
+          setUser(null);
+          return;
+        }
+
+        console.log("res user : ", res);
+
+        const data = await res.json();
+        console.log("data user : ", data);
+        setUser(data);
+      } catch (error) {
+        setUser(null);
+        console.error("Error fetching user", error);
+      }
+    };
+
+    getUser();
+  }, []);
+
+  useEffect(() => {
+    if (!user) return;
+
     const getDashboard = async () => {
       try {
-        const res = await fetch("http://localhost:4000/dashboard");
+        const res = await fetch(`${API_BASE_URL}/dashboard`, {
+          credentials: "include",
+        });
         const data = await res.json();
         console.log("data", data.mascots);
         setLastAddedMascots(data.mascots);
@@ -18,7 +54,7 @@ export default function Dashboard() {
     };
 
     getDashboard();
-  }, []);
+  }, [user]);
 
   return (
     <div className="max-w-3xl mx-auto p-6">
