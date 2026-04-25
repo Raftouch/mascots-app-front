@@ -14,51 +14,60 @@ export default function Dashboard() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const getUser = async () => {
+    const getPageAccess = async () => {
       try {
-        const res = await fetch(`${API_BASE_URL}/me`, {
+        const userRes = await fetch(`${API_BASE_URL}/me`, {
           credentials: "include",
         });
 
-        if (!res.ok) {
+        if (!userRes.ok) {
           setUser(null);
+          setLoading(false);
           return;
         }
 
-        console.log("res user : ", res);
+        console.log("res user : ", userRes);
 
-        const data = await res.json();
-        console.log("data user : ", data);
-        setUser(data);
+        const userData = await userRes.json();
+        console.log("data user : ", userData);
+        setUser(userData);
+
+        const dashboardRes = await fetch(`${API_BASE_URL}/dashboard`, {
+          credentials: "include",
+        });
+        const dashboardData = await dashboardRes.json();
+        console.log("dashboardData", dashboardData.mascots);
+        setLastAddedMascots(dashboardData.mascots);
       } catch (error) {
         setUser(null);
-        console.error("Error fetching user", error);
+        // console.error("Error fetching user", error);
+        console.error(error);
       } finally {
         setLoading(false);
       }
     };
 
-    getUser();
+    getPageAccess();
   }, []);
 
-  useEffect(() => {
-    if (!user) return;
+  // useEffect(() => {
+  //   if (!user) return;
 
-    const getDashboard = async () => {
-      try {
-        const res = await fetch(`${API_BASE_URL}/dashboard`, {
-          credentials: "include",
-        });
-        const data = await res.json();
-        console.log("data", data.mascots);
-        setLastAddedMascots(data.mascots);
-      } catch (error) {
-        console.error("Error fetching mascots", error);
-      }
-    };
+  //   const getDashboard = async () => {
+  //     try {
+  //       const res = await fetch(`${API_BASE_URL}/dashboard`, {
+  //         credentials: "include",
+  //       });
+  //       const data = await res.json();
+  //       console.log("data", data.mascots);
+  //       setLastAddedMascots(data.mascots);
+  //     } catch (error) {
+  //       console.error("Error fetching mascots", error);
+  //     }
+  //   };
 
-    getDashboard();
-  }, [user]);
+  //   getDashboard();
+  // }, [user]);
 
   if (loading) return <p>Loading...</p>;
   if (!user) return <Navigate to="/login" />;
