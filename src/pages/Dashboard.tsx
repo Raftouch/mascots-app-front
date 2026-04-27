@@ -1,73 +1,33 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import type { Mascot } from "../types/mascot";
 import MascotCardSimplified from "../components/MascotCardSimplified";
 import { API_BASE_URL } from "../config/api";
 import { Navigate } from "react-router-dom";
-
-type User = {
-  _id: string;
-};
+import { AuthContext } from "../context/AuthContext";
 
 export default function Dashboard() {
   const [lastAddedMascots, setLastAddedMascots] = useState<Mascot[]>([]);
-  const [user, setUser] = useState<User | null>(null);
-  const [loading, setLoading] = useState(true);
+
+  const { user, loading } = useContext(AuthContext);
 
   useEffect(() => {
-    const getPageAccess = async () => {
+    if (loading || !user) return;
+
+    const getDashboard = async () => {
       try {
-        const userRes = await fetch(`${API_BASE_URL}/me`, {
+        const res = await fetch(`${API_BASE_URL}/dashboard`, {
           credentials: "include",
         });
-
-        if (!userRes.ok) {
-          setUser(null);
-          setLoading(false);
-          return;
-        }
-
-        console.log("res user : ", userRes);
-
-        const userData = await userRes.json();
-        console.log("data user : ", userData);
-        setUser(userData);
-
-        const dashboardRes = await fetch(`${API_BASE_URL}/dashboard`, {
-          credentials: "include",
-        });
-        const dashboardData = await dashboardRes.json();
-        console.log("dashboardData", dashboardData.mascots);
-        setLastAddedMascots(dashboardData.mascots);
+        const data = await res.json();
+        console.log("data", data.mascots);
+        setLastAddedMascots(data.mascots);
       } catch (error) {
-        setUser(null);
-        // console.error("Error fetching user", error);
-        console.error(error);
-      } finally {
-        setLoading(false);
+        console.error("Error fetching mascots", error);
       }
     };
 
-    getPageAccess();
-  }, []);
-
-  // useEffect(() => {
-  //   if (!user) return;
-
-  //   const getDashboard = async () => {
-  //     try {
-  //       const res = await fetch(`${API_BASE_URL}/dashboard`, {
-  //         credentials: "include",
-  //       });
-  //       const data = await res.json();
-  //       console.log("data", data.mascots);
-  //       setLastAddedMascots(data.mascots);
-  //     } catch (error) {
-  //       console.error("Error fetching mascots", error);
-  //     }
-  //   };
-
-  //   getDashboard();
-  // }, [user]);
+    getDashboard();
+  }, [user, loading]);
 
   if (loading) return <p>Loading...</p>;
   if (!user) return <Navigate to="/login" />;
