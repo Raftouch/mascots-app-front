@@ -1,9 +1,10 @@
-import { useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import { useContext, useEffect, useState } from "react";
+import { Link, Navigate, useParams } from "react-router-dom";
 import type { Collaborator } from "../types/collaborator";
 import type { Mascot } from "../types/mascot";
 import CollaboratorCard from "../components/CollaboratorCard";
 import { getCollaboratorById } from "../api/collaborators";
+import { AuthContext } from "../context/AuthContext";
 
 export default function CollaboratorDetails() {
   const [collaborator, setCollaborator] = useState<Collaborator | null>(null);
@@ -11,8 +12,11 @@ export default function CollaboratorDetails() {
     [],
   );
   const { id } = useParams();
+  const { user, loading } = useContext(AuthContext);
 
   useEffect(() => {
+    if (loading || !user || !id) return;
+
     const getCollaboratorDetails = async (id: string) => {
       try {
         const data = await getCollaboratorById(id);
@@ -25,7 +29,11 @@ export default function CollaboratorDetails() {
 
     if (!id) return;
     getCollaboratorDetails(id);
-  }, [id]);
+  }, [id, user, loading]);
+
+  if (loading) return <p>Loading...</p>;
+  if (!user) return <Navigate to="/login" />;
+  if (!collaborator) return <p>No collaborator found</p>;
 
   return (
     <div className="max-w-4xl mx-auto p-6 space-y-6">
