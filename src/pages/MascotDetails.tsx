@@ -1,14 +1,16 @@
-import { useEffect, useState } from "react";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { useContext, useEffect, useState } from "react";
+import { Link, Navigate, useNavigate, useParams } from "react-router-dom";
 import type { Mascot } from "../types/mascot";
 import MascotCard from "../components/MascotCard";
 import { getMascotById, removeMascot } from "../api/mascots";
 import Modal from "../components/Modal";
+import { AuthContext } from "../context/AuthContext";
 
 export default function MascotDetails() {
   const [mascot, setMascot] = useState<Mascot | null>(null);
   const [modal, setModal] = useState(false);
   const { id } = useParams();
+  const { user, loading } = useContext(AuthContext);
 
   const navigate = useNavigate();
 
@@ -16,6 +18,8 @@ export default function MascotDetails() {
   console.log("mascot: ", mascot);
 
   useEffect(() => {
+    if (loading || !user || !id) return;
+
     const getMascotDetails = async (id: string) => {
       try {
         const data = await getMascotById(id);
@@ -28,8 +32,10 @@ export default function MascotDetails() {
 
     if (!id) return;
     getMascotDetails(id);
-  }, [id]);
+  }, [id, user, loading]);
 
+  if (loading) return <p>Loading...</p>;
+  if (!user) return <Navigate to="/login" />;
   if (!mascot) return <p>No mascot found</p>;
 
   return (
