@@ -1,8 +1,10 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import MascotList from "../components/MascotList";
 import type { Mascot } from "../types/mascot";
 import { getMascots } from "../api/mascots";
 import { useDebounce } from "../hooks";
+import { AuthContext } from "../context/AuthContext";
+import { Navigate } from "react-router-dom";
 
 export default function Mascots() {
   const [mascots, setMascots] = useState<Mascot[]>([]);
@@ -10,8 +12,11 @@ export default function Mascots() {
   const [bornBefore, setBornBefore] = useState("");
   const [bornAfter, setBornAfter] = useState("");
   const debouncedSearchName = useDebounce(searchName);
+  const { user, loading } = useContext(AuthContext);
 
   useEffect(() => {
+    if (loading || !user) return;
+
     const fetchMascots = async () => {
       try {
         const data = await getMascots(
@@ -27,7 +32,10 @@ export default function Mascots() {
     };
 
     fetchMascots();
-  }, [debouncedSearchName, bornBefore, bornAfter]);
+  }, [debouncedSearchName, bornBefore, bornAfter, user, loading]);
+
+  if (loading) return <p>Loading...</p>;
+  if (!user) return <Navigate to="/login" />;
 
   return (
     <div className="max-w-3xl mx-auto p-6">
