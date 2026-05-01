@@ -6,14 +6,18 @@ type Option = {
 interface SelectOptionProps {
   options: Option[];
   defaultValue: string;
+  value: string;
+  onChange: (value: string) => void;
 }
 
 export default function SelectOption({
   options,
   defaultValue,
+  value,
+  onChange,
 }: SelectOptionProps) {
   return (
-    <select>
+    <select value={value} onChange={(e) => onChange(e.target.value)}>
       <option value="" disabled>
         {defaultValue}
       </option>
