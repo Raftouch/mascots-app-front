@@ -1,23 +1,23 @@
-type Option = {
-  value: string;
+type Option<T> = {
+  value: T;
   name: string;
 };
 
-interface SelectOptionProps {
-  options: Option[];
+interface SelectOptionProps<T> {
+  options: Option<T>[];
   defaultValue: string;
-  value: string;
-  onChange: (value: string) => void;
+  value: T;
+  onChange: (value: T) => void;
 }
 
-export default function SelectOption({
+export default function SelectOption<T extends string>({
   options,
   defaultValue,
   value,
   onChange,
-}: SelectOptionProps) {
+}: SelectOptionProps<T>) {
   return (
-    <select value={value} onChange={(e) => onChange(e.target.value)}>
+    <select value={value} onChange={(e) => onChange(e.target.value as T)}>
       <option value="" disabled>
         {defaultValue}
       </option>
