@@ -62,6 +62,10 @@ export default function Mascots() {
     setSelectedSort(selectedOption);
   };
 
+  const resetSort = () => {
+    setSelectedSort("");
+  };
+
   if (loading) return <p>Loading...</p>;
   if (!user) return <Navigate to="/login" />;
 
@@ -103,12 +107,15 @@ export default function Mascots() {
         </div>
       </div>
 
-      <SelectOption
-        value={selectedSort}
-        defaultValue="Sort by"
-        options={sortOptions}
-        onChange={sortMascots}
-      />
+      <div className="flex gap-10">
+        <SelectOption
+          value={selectedSort}
+          defaultValue="Sort by"
+          options={sortOptions}
+          onChange={sortMascots}
+        />
+        {selectedSort && <button onClick={resetSort}>Reset sort</button>}
+      </div>
 
       {mascots.length === 0 ? (
         <p className="text-gray-500">No mascots found</p>
