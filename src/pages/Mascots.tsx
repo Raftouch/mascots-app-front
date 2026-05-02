@@ -5,12 +5,27 @@ import { getMascots } from "../api/mascots";
 import { useDebounce } from "../hooks";
 import { AuthContext } from "../context/AuthContext";
 import { Navigate } from "react-router-dom";
+import SelectOption from "../components/UI/SelectOption";
+
+type SortOptionValueType = "breed" | "";
+// type SortOptionValueType = "breed" | "gender" | "";
+
+type SortOptionsType = {
+  value: SortOptionValueType;
+  name: string;
+};
+
+const sortOptions: SortOptionsType[] = [
+  { value: "breed", name: "by breed" },
+  // { value: "gender", name: "by gender" },
+];
 
 export default function Mascots() {
   const [mascots, setMascots] = useState<Mascot[]>([]);
   const [searchName, setSearchName] = useState("");
   const [bornBefore, setBornBefore] = useState("");
   const [bornAfter, setBornAfter] = useState("");
+  const [selectedSort, setSelectedSort] = useState<SortOptionValueType>("");
   const debouncedSearchName = useDebounce(searchName);
   const { user, loading } = useContext(AuthContext);
 
@@ -33,6 +48,18 @@ export default function Mascots() {
 
     fetchMascots();
   }, [debouncedSearchName, bornBefore, bornAfter, user, loading]);
+
+  const sortMascots = (selectedOption: SortOptionValueType) => {
+    setSelectedSort(selectedOption);
+    setMascots((prev) =>
+      [...prev].sort((a, b) => {
+        if (selectedOption === "breed") return a.breed.localeCompare(b.breed);
+        // if (selectedOption === "gender")
+        //   return a.gender.localeCompare(b.gender);
+        return 0;
+      }),
+    );
+  };
 
   if (loading) return <p>Loading...</p>;
   if (!user) return <Navigate to="/login" />;
@@ -74,6 +101,14 @@ export default function Mascots() {
           </div>
         </div>
       </div>
+
+      <SelectOption
+        value={selectedSort}
+        defaultValue="Sort by"
+        options={sortOptions}
+        onChange={sortMascots}
+      />
+
       {mascots.length === 0 ? (
         <p className="text-gray-500">No mascots found</p>
       ) : (
