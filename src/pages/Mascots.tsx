@@ -7,7 +7,7 @@ import { AuthContext } from "../context/AuthContext";
 import { Navigate } from "react-router-dom";
 import SelectOption from "../components/UI/SelectOption";
 
-type SortOptionValueType = "breed" | "";
+type SortOptionValueType = "breed" | "name" | "";
 // type SortOptionValueType = "breed" | "gender" | "";
 
 type SortOptionsType = {
@@ -16,7 +16,8 @@ type SortOptionsType = {
 };
 
 const sortOptions: SortOptionsType[] = [
-  { value: "breed", name: "by breed" },
+  { value: "name", name: "name" },
+  { value: "breed", name: "breed" },
   // { value: "gender", name: "by gender" },
 ];
 
@@ -50,6 +51,7 @@ export default function Mascots() {
   }, [debouncedSearchName, bornBefore, bornAfter, user, loading]);
 
   const sortedMascots = [...mascots].sort((a, b) => {
+    if (selectedSort === "name") return a.name.localeCompare(b.name);
     if (selectedSort === "breed") return a.breed.localeCompare(b.breed);
     // if (selectedOption === "gender")
     //   return a.gender.localeCompare(b.gender);
