@@ -49,16 +49,15 @@ export default function Mascots() {
     fetchMascots();
   }, [debouncedSearchName, bornBefore, bornAfter, user, loading]);
 
+  const sortedMascots = [...mascots].sort((a, b) => {
+    if (selectedSort === "breed") return a.breed.localeCompare(b.breed);
+    // if (selectedOption === "gender")
+    //   return a.gender.localeCompare(b.gender);
+    return 0;
+  });
+
   const sortMascots = (selectedOption: SortOptionValueType) => {
     setSelectedSort(selectedOption);
-    setMascots((prev) =>
-      [...prev].sort((a, b) => {
-        if (selectedOption === "breed") return a.breed.localeCompare(b.breed);
-        // if (selectedOption === "gender")
-        //   return a.gender.localeCompare(b.gender);
-        return 0;
-      }),
-    );
   };
 
   if (loading) return <p>Loading...</p>;
@@ -112,7 +111,7 @@ export default function Mascots() {
       {mascots.length === 0 ? (
         <p className="text-gray-500">No mascots found</p>
       ) : (
-        <MascotList mascots={mascots} />
+        <MascotList mascots={sortedMascots} />
       )}
     </div>
   );
