@@ -107,14 +107,21 @@ export default function Mascots() {
         </div>
       </div>
 
-      <div className="flex gap-10">
+      <div className="flex items-center gap-4">
         <SelectOption
           value={selectedSort}
           defaultValue="Sort by"
           options={sortOptions}
           onChange={sortMascots}
         />
-        {selectedSort && <button onClick={resetSort}>Reset sort</button>}
+        {selectedSort && (
+          <button
+            onClick={resetSort}
+            className="text-sm text-red-600 hover:text-red-800 hover:underline"
+          >
+            Reset sort
+          </button>
+        )}
       </div>
 
       {mascots.length === 0 ? (
