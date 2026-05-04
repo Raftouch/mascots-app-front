@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useMemo, useState } from "react";
 import MascotList from "../components/MascotList";
 import type { Mascot } from "../types/mascot";
 import { getMascots } from "../api/mascots";
@@ -50,12 +50,13 @@ export default function Mascots() {
     fetchMascots();
   }, [debouncedSearchName, bornBefore, bornAfter, user, loading]);
 
-  const sortedMascots = [...mascots].sort((a, b) => {
-    if (!selectedSort) return 0;
-    return a[selectedSort].localeCompare(b[selectedSort]);
-    // if (selectedSort === "name") return a.name.localeCompare(b.name);
-    // if (selectedSort === "breed") return a.breed.localeCompare(b.breed);
-  });
+  const sortedMascots = useMemo(() => {
+    if (!selectedSort) return mascots;
+
+    return [...mascots].sort((a, b) =>
+      a[selectedSort].localeCompare(b[selectedSort]),
+    );
+  }, [selectedSort, mascots]);
 
   const sortMascots = (selectedOption: SortOptionValueType) => {
     setSelectedSort(selectedOption);
