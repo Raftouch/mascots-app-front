@@ -51,11 +51,10 @@ export default function Mascots() {
   }, [debouncedSearchName, bornBefore, bornAfter, user, loading]);
 
   const sortedMascots = [...mascots].sort((a, b) => {
-    if (selectedSort === "name") return a.name.localeCompare(b.name);
-    if (selectedSort === "breed") return a.breed.localeCompare(b.breed);
-    // if (selectedOption === "gender")
-    //   return a.gender.localeCompare(b.gender);
-    return 0;
+    if (!selectedSort) return 0;
+    return a[selectedSort].localeCompare(b[selectedSort]);
+    // if (selectedSort === "name") return a.name.localeCompare(b.name);
+    // if (selectedSort === "breed") return a.breed.localeCompare(b.breed);
   });
 
   const sortMascots = (selectedOption: SortOptionValueType) => {
