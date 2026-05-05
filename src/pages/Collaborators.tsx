@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useMemo, useState } from "react";
 import CollaboratorList from "../components/CollaboratorList";
 import type { Collaborator } from "../types/collaborator";
 import { getCollaborators } from "../api/collaborators";
@@ -26,9 +26,11 @@ export default function Collaborators() {
     fetchCollaborators();
   }, [user, loading]);
 
-  const filteredCollaborators = collaborators.filter((collab) =>
-    collab.name.toLowerCase().includes(searchName.toLowerCase()),
-  );
+  const filteredCollaborators = useMemo(() => {
+    return collaborators.filter((collab) =>
+      collab.name.toLowerCase().includes(searchName.toLowerCase()),
+    );
+  }, [searchName, collaborators]);
 
   if (loading) return <p>Loading...</p>;
   if (!user) return <Navigate to="/login" />;
