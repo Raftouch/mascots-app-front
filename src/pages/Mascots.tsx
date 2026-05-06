@@ -107,7 +107,7 @@ export default function Mascots() {
         </div>
       </div>
 
-      <div className="flex items-center gap-4">
+      <div className="flex items-center gap-4 mb-6">
         <SelectOption
           value={selectedSort}
           defaultValue="Sort by"

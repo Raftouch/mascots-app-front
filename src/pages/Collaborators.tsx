@@ -30,11 +30,10 @@ export default function Collaborators() {
 
   if (loading) return <p>Loading...</p>;
   if (!user) return <Navigate to="/login" />;
-  if (collaborators.length === 0) return <p>No collaborators found</p>;
 
   return (
-    <>
-      <div className="flex flex-col max-w-3xl mx-auto p-6">
+    <div className="max-w-3xl mx-auto p-6">
+      <div className="flex flex-col mb-6">
         <label className="text-sm font-medium text-gray-700 mb-1">Name</label>
         <input
           type="text"
@@ -43,7 +42,11 @@ export default function Collaborators() {
           onChange={(e) => setSearchName(e.target.value)}
         />
       </div>
-      <CollaboratorList collaborators={collaborators} />
-    </>
+      {collaborators.length === 0 ? (
+        <p className="text-gray-500">No collaborators found</p>
+      ) : (
+        <CollaboratorList collaborators={collaborators} />
+      )}
+    </div>
   );
 }
