@@ -1,13 +1,15 @@
-import { useContext, useEffect, useMemo, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import CollaboratorList from "../components/CollaboratorList";
 import type { Collaborator } from "../types/collaborator";
 import { getCollaborators } from "../api/collaborators";
 import { AuthContext } from "../context/AuthContext";
 import { Navigate } from "react-router-dom";
+import { useDebounce } from "../hooks";
 
 export default function Collaborators() {
   const [collaborators, setCollaborators] = useState<Collaborator[]>([]);
   const [searchName, setSearchName] = useState("");
+  const debouncedSearchName = useDebounce(searchName);
   const { user, loading } = useContext(AuthContext);
 
   useEffect(() => {
@@ -15,7 +17,7 @@ export default function Collaborators() {
 
     const fetchCollaborators = async () => {
       try {
-        const data = await getCollaborators();
+        const data = await getCollaborators(debouncedSearchName);
         setCollaborators(data.collaborators);
         console.log("data : ", data.collaborators);
       } catch (error) {
@@ -24,13 +26,7 @@ export default function Collaborators() {
     };
 
     fetchCollaborators();
-  }, [user, loading]);
-
-  const filteredCollaborators = useMemo(() => {
-    return collaborators.filter((collab) =>
-      collab.name.toLowerCase().includes(searchName.toLowerCase()),
-    );
-  }, [searchName, collaborators]);
+  }, [debouncedSearchName, user, loading]);
 
   if (loading) return <p>Loading...</p>;
   if (!user) return <Navigate to="/login" />;
@@ -47,7 +43,7 @@ export default function Collaborators() {
           onChange={(e) => setSearchName(e.target.value)}
         />
       </div>
-      <CollaboratorList collaborators={filteredCollaborators} />
+      <CollaboratorList collaborators={collaborators} />
     </>
   );
 }
