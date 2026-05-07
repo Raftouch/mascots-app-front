@@ -8,6 +8,7 @@ type User = {
 type AuthContextType = {
   user: User | null;
   loading: boolean;
+  setUser: React.Dispatch<React.SetStateAction<User | null>>;
 };
 
 type AuthProviderType = {
@@ -17,6 +18,7 @@ type AuthProviderType = {
 export const AuthContext = createContext<AuthContextType>({
   user: null,
   loading: true,
+  setUser: () => {},
 });
 
 export const AuthProvider = ({ children }: AuthProviderType) => {
@@ -52,7 +54,7 @@ export const AuthProvider = ({ children }: AuthProviderType) => {
   }, []);
 
   return (
-    <AuthContext.Provider value={{ user, loading }}>
+    <AuthContext.Provider value={{ user, loading, setUser }}>
       {children}
     </AuthContext.Provider>
   );
