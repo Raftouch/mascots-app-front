@@ -115,6 +115,7 @@ export default function Mascots() {
         )}
       </div>
 
+      <h1 className="text-3xl font-bold mb-6">Mascots</h1>
       {mascots.length === 0 ? (
         <p className="text-gray-500">No mascots found</p>
       ) : (
