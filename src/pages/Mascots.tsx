@@ -6,6 +6,7 @@ import { useDebounce } from "../hooks";
 import { AuthContext } from "../context/AuthContext";
 import { Navigate } from "react-router-dom";
 import SelectOption from "../components/UI/SelectOption";
+import FilterInput from "../components/UI/FilterInput";
 
 type SortOptionValueType = "breed" | "name" | "";
 // type SortOptionValueType = "breed" | "gender" | "";
@@ -72,38 +73,25 @@ export default function Mascots() {
   return (
     <div className="max-w-3xl mx-auto p-6">
       <div className="mb-6 space-y-4">
-        <div className="flex flex-col">
-          <label className="text-sm font-medium text-gray-700 mb-1">Name</label>
-          <input
-            type="text"
-            className="border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-            value={searchName}
-            onChange={(e) => setSearchName(e.target.value)}
-          />
-        </div>
+        <FilterInput
+          label="Name"
+          type="text"
+          value={searchName}
+          onChange={(e) => setSearchName(e.target.value)}
+        />
         <div className="grid grid-cols-2 gap-4">
-          <div className="flex flex-col">
-            <label className="text-sm font-medium text-gray-700 mb-1">
-              Born After
-            </label>
-            <input
-              type="date"
-              className="border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-              value={bornAfter}
-              onChange={(e) => setBornAfter(e.target.value)}
-            />
-          </div>
-          <div className="flex flex-col">
-            <label className="text-sm font-medium text-gray-700 mb-1">
-              Born Before
-            </label>
-            <input
-              type="date"
-              className="border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-              value={bornBefore}
-              onChange={(e) => setBornBefore(e.target.value)}
-            />
-          </div>
+          <FilterInput
+            label="Born After"
+            type="date"
+            value={bornAfter}
+            onChange={(e) => setBornAfter(e.target.value)}
+          />
+          <FilterInput
+            label="Born Before"
+            type="date"
+            value={bornBefore}
+            onChange={(e) => setBornBefore(e.target.value)}
+          />
         </div>
       </div>
 
