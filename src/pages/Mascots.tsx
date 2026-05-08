@@ -75,6 +75,7 @@ export default function Mascots() {
       <div className="mb-6 space-y-4">
         <FilterInput
           label="Name"
+          id="name"
           type="text"
           value={searchName}
           onChange={(e) => setSearchName(e.target.value)}
@@ -82,12 +83,14 @@ export default function Mascots() {
         <div className="grid grid-cols-2 gap-4">
           <FilterInput
             label="Born After"
+            id="bornAfter"
             type="date"
             value={bornAfter}
             onChange={(e) => setBornAfter(e.target.value)}
           />
           <FilterInput
             label="Born Before"
+            id="bornBefore"
             type="date"
             value={bornBefore}
             onChange={(e) => setBornBefore(e.target.value)}
