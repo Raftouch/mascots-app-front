@@ -42,6 +42,8 @@ export default function Collaborators() {
           onChange={(e) => setSearchName(e.target.value)}
         />
       </div>
+
+      <h1 className="text-3xl font-bold mb-6">Collaborators</h1>
       {collaborators.length === 0 ? (
         <p className="text-gray-500">No collaborators found</p>
       ) : (
