@@ -9,11 +9,10 @@ import SelectOption from "../components/UI/SelectOption";
 import FilterInput from "../components/UI/FilterInput";
 import useSortedMascots from "../hooks/useMascots";
 
-type SortOptionValueType = "breed" | "name" | "";
-// type SortOptionValueType = "breed" | "gender" | "";
+type SortableMascotKeys = "breed" | "name";
 
 type SortOptionsType = {
-  value: SortOptionValueType;
+  value: SortableMascotKeys | "";
   name: string;
 };
 
@@ -28,7 +27,7 @@ export default function Mascots() {
   const [searchName, setSearchName] = useState("");
   const [bornBefore, setBornBefore] = useState("");
   const [bornAfter, setBornAfter] = useState("");
-  const [selectedSort, setSelectedSort] = useState<SortOptionValueType>("");
+  const [selectedSort, setSelectedSort] = useState<SortableMascotKeys | "">("");
   const debouncedSearchName = useDebounce(searchName);
   const { user, loading } = useContext(AuthContext);
 
@@ -54,7 +53,7 @@ export default function Mascots() {
 
   const sortedMascots = useSortedMascots({ mascots, selectedSort });
 
-  const sortMascots = (selectedOption: SortOptionValueType) => {
+  const sortMascots = (selectedOption: SortableMascotKeys | "") => {
     setSelectedSort(selectedOption);
   };
 
