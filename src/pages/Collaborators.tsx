@@ -4,7 +4,7 @@ import type { Collaborator } from "../types/collaborator";
 import { getCollaborators } from "../api/collaborators";
 import { AuthContext } from "../context/AuthContext";
 import { Navigate } from "react-router-dom";
-import { useDebounce } from "../hooks";
+import { useDebounce } from "../hooks/useDebounce";
 
 export default function Collaborators() {
   const [collaborators, setCollaborators] = useState<Collaborator[]>([]);
