@@ -13,3 +13,5 @@ export type Mascot = {
 };
 
 export type Gender = "Male" | "Female";
+
+export type SortableMascotKeys = "breed" | "name";

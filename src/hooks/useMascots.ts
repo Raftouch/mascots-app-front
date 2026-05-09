@@ -1,11 +1,9 @@
 import { useMemo } from "react";
-import type { Mascot } from "../types/mascot";
-
-type SortOptionValueType = "breed" | "name" | "";
+import type { Mascot, SortableMascotKeys } from "../types/mascot";
 
 interface SortedMascotsProps {
   mascots: Mascot[];
-  selectedSort: SortOptionValueType;
+  selectedSort: SortableMascotKeys | "";
 }
 
 export default function useSortedMascots({

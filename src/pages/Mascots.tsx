@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState } from "react";
 import MascotList from "../components/MascotList";
-import type { Mascot } from "../types/mascot";
+import type { Mascot, SortableMascotKeys } from "../types/mascot";
 import { getMascots } from "../api/mascots";
 import { useDebounce } from "../hooks/useDebounce";
 import { AuthContext } from "../context/AuthContext";
@@ -8,8 +8,6 @@ import { Navigate } from "react-router-dom";
 import SelectOption from "../components/UI/SelectOption";
 import FilterInput from "../components/UI/FilterInput";
 import useSortedMascots from "../hooks/useMascots";
-
-type SortableMascotKeys = "breed" | "name";
 
 type SortOptionsType = {
   value: SortableMascotKeys | "";
