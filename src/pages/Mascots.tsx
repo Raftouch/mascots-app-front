@@ -1,12 +1,13 @@
-import { useContext, useEffect, useMemo, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import MascotList from "../components/MascotList";
 import type { Mascot } from "../types/mascot";
 import { getMascots } from "../api/mascots";
-import { useDebounce } from "../hooks";
+import { useDebounce } from "../hooks/useDebounce";
 import { AuthContext } from "../context/AuthContext";
 import { Navigate } from "react-router-dom";
 import SelectOption from "../components/UI/SelectOption";
 import FilterInput from "../components/UI/FilterInput";
+import useSortedMascots from "../hooks/useMascots";
 
 type SortOptionValueType = "breed" | "name" | "";
 // type SortOptionValueType = "breed" | "gender" | "";
@@ -51,13 +52,7 @@ export default function Mascots() {
     fetchMascots();
   }, [debouncedSearchName, bornBefore, bornAfter, user, loading]);
 
-  const sortedMascots = useMemo(() => {
-    if (!selectedSort) return mascots;
-
-    return [...mascots].sort((a, b) =>
-      a[selectedSort].localeCompare(b[selectedSort]),
-    );
-  }, [selectedSort, mascots]);
+  const sortedMascots = useSortedMascots({ mascots, selectedSort });
 
   const sortMascots = (selectedOption: SortOptionValueType) => {
     setSelectedSort(selectedOption);
