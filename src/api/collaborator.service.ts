@@ -2,12 +2,11 @@ import { API_BASE_URL } from "../config/api";
 
 export default class CollaboratorService {
   static async getAll(searchName: string) {
-    const res = await fetch(
-      `${API_BASE_URL}/collaborators?name=${searchName}`,
-      {
-        credentials: "include",
-      },
-    );
+    const params = new URLSearchParams({ name: searchName });
+
+    const res = await fetch(`${API_BASE_URL}/collaborators?${params}`, {
+      credentials: "include",
+    });
 
     if (!res.ok) throw new Error(`Request failed: ${res.status}`);
 

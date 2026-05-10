@@ -6,12 +6,15 @@ export default class MascotService {
     bornBefore: string,
     bornAfter: string,
   ) {
-    const res = await fetch(
-      `${API_BASE_URL}/mascots?name=${searchName}&bornBefore=${bornBefore}&bornAfter=${bornAfter}`,
-      {
-        credentials: "include",
-      },
-    );
+    const params = new URLSearchParams();
+
+    if (searchName) params.append("name", searchName);
+    if (bornBefore) params.append("bornBefore", bornBefore);
+    if (bornAfter) params.append("bornAfter", bornAfter);
+
+    const res = await fetch(`${API_BASE_URL}/mascots?${params}`, {
+      credentials: "include",
+    });
 
     if (!res.ok) throw new Error(`Request failed: ${res.status}`);
 
