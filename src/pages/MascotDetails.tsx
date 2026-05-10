@@ -2,7 +2,7 @@ import { useContext, useEffect, useState } from "react";
 import { Link, Navigate, useNavigate, useParams } from "react-router-dom";
 import type { Mascot } from "../types/mascot";
 import MascotCard from "../components/MascotCard";
-import { getMascotById, removeMascot } from "../api/mascots";
+import MascotService from "../api/mascot.service";
 import Modal from "../components/Modal";
 import { AuthContext } from "../context/AuthContext";
 
@@ -22,7 +22,7 @@ export default function MascotDetails() {
 
     const getMascotDetails = async (id: string) => {
       try {
-        const data = await getMascotById(id);
+        const data = await MascotService.getById(id);
         console.log("mascot data : ", data.mascot);
         setMascot(data.mascot);
       } catch (error) {
@@ -57,7 +57,7 @@ export default function MascotDetails() {
       </div>
       {modal && (
         <Modal
-          onDelete={() => removeMascot(mascot._id)}
+          onDelete={() => MascotService.remove(mascot._id)}
           onClose={() => setModal(false)}
           onRedirect={() =>
             navigate(`/collaborators/${mascot.collaborator._id}`)

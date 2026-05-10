@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import type { Collaborator } from "../types/collaborator";
 import { getCollaboratorById } from "../api/collaborators";
-import { createMascot } from "../api/mascots";
+import MascotService from "../api/mascot.service";
 import type { Gender } from "../types/mascot";
 
 export default function CreateMascot() {
@@ -51,7 +51,7 @@ export default function CreateMascot() {
     console.log(Object.fromEntries(formData));
 
     try {
-      await createMascot(formData);
+      await MascotService.create(formData);
       console.log("Mascot : ", Object.fromEntries(formData));
       alert("Mascot created");
       if (id) navigate(`/collaborators/${id}`, { replace: true });

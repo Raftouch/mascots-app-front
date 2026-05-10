@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState } from "react";
 import MascotList from "../components/MascotList";
 import type { Mascot, SortableMascotKeys } from "../types/mascot";
-import { getMascots } from "../api/mascots";
+import MascotService from "../api/mascot.service";
 import { useDebounce } from "../hooks/useDebounce";
 import { AuthContext } from "../context/AuthContext";
 import { Navigate } from "react-router-dom";
@@ -34,7 +34,7 @@ export default function Mascots() {
 
     const fetchMascots = async () => {
       try {
-        const data = await getMascots(
+        const data = await MascotService.getAll(
           debouncedSearchName,
           bornBefore,
           bornAfter,

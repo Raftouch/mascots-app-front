@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { getMascotById, updateMascot } from "../api/mascots";
+import MascotService from "../api/mascot.service";
 import type { Gender } from "../types/mascot";
 
 export default function EditMascot() {
@@ -17,7 +17,7 @@ export default function EditMascot() {
   useEffect(() => {
     const getMascotDetails = async (id: string) => {
       try {
-        const data = await getMascotById(id);
+        const data = await MascotService.getById(id);
         console.log("data : ", data.mascot);
         setName(data.mascot.name);
         setBreed(data.mascot.breed);
@@ -49,7 +49,7 @@ export default function EditMascot() {
     console.log(Object.fromEntries(formData));
 
     try {
-      await updateMascot(id!, formData);
+      await MascotService.update(id!, formData);
       console.log("Mascot : ", Object.fromEntries(formData));
       alert("Mascot updated");
       if (id) navigate(`/mascots/${id}`, { replace: true });
