@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import type { Collaborator } from "../types/collaborator";
-import { getCollaboratorById } from "../api/collaborators";
+import CollaboratorService from "../api/collaborator.service";
 import MascotService from "../api/mascot.service";
 import type { Gender } from "../types/mascot";
 
@@ -23,7 +23,7 @@ export default function CreateMascot() {
   useEffect(() => {
     const getCollaboratorDetails = async (id: string) => {
       try {
-        const data = await getCollaboratorById(id);
+        const data = await CollaboratorService.getById(id);
         console.log("data : ", data.collaborator);
         setCollaborator(data.collaborator);
       } catch (error) {

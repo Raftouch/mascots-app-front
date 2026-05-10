@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState } from "react";
 import CollaboratorList from "../components/CollaboratorList";
 import type { Collaborator } from "../types/collaborator";
-import { getCollaborators } from "../api/collaborators";
+import CollaboratorService from "../api/collaborator.service";
 import { AuthContext } from "../context/AuthContext";
 import { Navigate } from "react-router-dom";
 import { useDebounce } from "../hooks/useDebounce";
@@ -17,7 +17,7 @@ export default function Collaborators() {
 
     const fetchCollaborators = async () => {
       try {
-        const data = await getCollaborators(debouncedSearchName);
+        const data = await CollaboratorService.getAll(debouncedSearchName);
         setCollaborators(data.collaborators);
         console.log("data : ", data.collaborators);
       } catch (error) {

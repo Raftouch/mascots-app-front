@@ -3,7 +3,7 @@ import { Link, Navigate, useParams } from "react-router-dom";
 import type { Collaborator } from "../types/collaborator";
 import type { Mascot } from "../types/mascot";
 import CollaboratorCard from "../components/CollaboratorCard";
-import { getCollaboratorById } from "../api/collaborators";
+import CollaboratorService from "../api/collaborator.service";
 import { AuthContext } from "../context/AuthContext";
 
 export default function CollaboratorDetails() {
@@ -19,7 +19,7 @@ export default function CollaboratorDetails() {
 
     const getCollaboratorDetails = async (id: string) => {
       try {
-        const data = await getCollaboratorById(id);
+        const data = await CollaboratorService.getById(id);
         setCollaborator(data.collaborator);
         setMascotsByCollaborator(data.mascotsByCollaborator);
       } catch (error) {

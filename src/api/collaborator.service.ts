@@ -1,0 +1,26 @@
+import { API_BASE_URL } from "../config/api";
+
+export default class CollaboratorService {
+  static async getAll(searchName: string) {
+    const res = await fetch(
+      `${API_BASE_URL}/collaborators?name=${searchName}`,
+      {
+        credentials: "include",
+      },
+    );
+
+    if (!res.ok) throw new Error(`Request failed: ${res.status}`);
+
+    return res.json();
+  }
+
+  static async getById(id: string) {
+    const res = await fetch(`${API_BASE_URL}/collaborators/${id}`, {
+      credentials: "include",
+    });
+
+    if (!res.ok) throw new Error(`Request failed: ${res.status}`);
+
+    return res.json();
+  }
+}
