@@ -25,15 +25,17 @@ export default function Mascots() {
   const [searchName, setSearchName] = useState("");
   const [bornBefore, setBornBefore] = useState("");
   const [bornAfter, setBornAfter] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
   const [selectedSort, setSelectedSort] = useState<SortableMascotKeys | "">("");
   const debouncedSearchName = useDebounce(searchName);
   const { user, loading } = useContext(AuthContext);
 
   useEffect(() => {
-    if (loading || !user) return;
+    if (!user) return;
 
     const fetchMascots = async () => {
       try {
+        setIsLoading(true);
         const data = await MascotService.getAll(
           debouncedSearchName,
           bornBefore,
@@ -43,11 +45,13 @@ export default function Mascots() {
         console.log("data mascots : ", data.mascots);
       } catch (error) {
         console.error("Error fetching mascots", error);
+      } finally {
+        setIsLoading(false);
       }
     };
 
     fetchMascots();
-  }, [debouncedSearchName, bornBefore, bornAfter, user, loading]);
+  }, [debouncedSearchName, bornBefore, bornAfter, user]);
 
   const sortedMascots = useSortedMascots({ mascots, selectedSort });
 
@@ -59,8 +63,7 @@ export default function Mascots() {
     setSelectedSort("");
   };
 
-  if (loading) return <p>Loading...</p>;
-  if (!user) return <Navigate to="/login" />;
+  if (!loading && !user) return <Navigate to="/login" />;
 
   return (
     <div className="max-w-3xl mx-auto p-6">
@@ -108,7 +111,9 @@ export default function Mascots() {
       </div>
 
       <h1 className="text-3xl font-bold mb-6">Mascots</h1>
-      {mascots.length === 0 ? (
+      {isLoading ? (
+        <p>Loading...</p>
+      ) : mascots.length === 0 ? (
         <p className="text-gray-500">No mascots found</p>
       ) : (
         <MascotList mascots={sortedMascots} />
