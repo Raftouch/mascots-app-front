@@ -34,7 +34,7 @@ export default function CollaboratorDetails() {
     getCollaboratorDetails(id);
   }, [id, user]);
 
-  if (authLoading) return <p>Cheking your session...</p>;
+  if (authLoading) return <p>Checking your session...</p>;
   if (!user) return <Navigate to="/login" />;
   if (isLoading) return <p>Loading collaborator...</p>;
   if (!collaborator) return <p>No collaborator found</p>;
