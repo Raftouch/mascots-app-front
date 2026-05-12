@@ -7,14 +7,15 @@ import { AuthContext } from "../context/AuthContext";
 
 export default function Dashboard() {
   const [lastAddedMascots, setLastAddedMascots] = useState<Mascot[]>([]);
-
-  const { user, loading } = useContext(AuthContext);
+  const [isLoading, setIsLoading] = useState(false);
+  const { user, loading: authLoading } = useContext(AuthContext);
 
   useEffect(() => {
-    if (loading || !user) return;
+    if (!user) return;
 
     const getDashboard = async () => {
       try {
+        setIsLoading(true);
         const res = await fetch(`${API_BASE_URL}/dashboard`, {
           credentials: "include",
         });
@@ -23,13 +24,15 @@ export default function Dashboard() {
         setLastAddedMascots(data.mascots);
       } catch (error) {
         console.error("Error fetching mascots", error);
+      } finally {
+        setIsLoading(false);
       }
     };
 
     getDashboard();
-  }, [user, loading]);
+  }, [user]);
 
-  if (loading) return <p>Loading...</p>;
+  if (authLoading) return <p>Checking your session...</p>;
   if (!user) return <Navigate to="/login" />;
 
   return (
@@ -39,9 +42,15 @@ export default function Dashboard() {
         <h2 className="text-xl font-semibold mb-4">Recently joined :</h2>
 
         <div className="space-y-2">
-          {lastAddedMascots.map((mascot) => (
-            <MascotCardSimplified key={mascot._id} mascot={mascot} />
-          ))}
+          {isLoading ? (
+            <p>Loading...</p>
+          ) : lastAddedMascots.length === 0 ? (
+            <p>No mascots yet</p>
+          ) : (
+            lastAddedMascots.map((mascot) => (
+              <MascotCardSimplified key={mascot._id} mascot={mascot} />
+            ))
+          )}
         </div>
       </div>
     </div>
