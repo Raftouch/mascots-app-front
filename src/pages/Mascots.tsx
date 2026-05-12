@@ -28,7 +28,7 @@ export default function Mascots() {
   const [isLoading, setIsLoading] = useState(false);
   const [selectedSort, setSelectedSort] = useState<SortableMascotKeys | "">("");
   const debouncedSearchName = useDebounce(searchName);
-  const { user, loading } = useContext(AuthContext);
+  const { user, loading: authLoading } = useContext(AuthContext);
 
   useEffect(() => {
     if (!user) return;
@@ -63,7 +63,8 @@ export default function Mascots() {
     setSelectedSort("");
   };
 
-  if (!loading && !user) return <Navigate to="/login" />;
+  if (authLoading) return <p>Checking your session...</p>;
+  if (!user) return <Navigate to="/login" />;
 
   return (
     <div className="max-w-3xl mx-auto p-6">

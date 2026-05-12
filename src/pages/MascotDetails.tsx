@@ -9,8 +9,9 @@ import { AuthContext } from "../context/AuthContext";
 export default function MascotDetails() {
   const [mascot, setMascot] = useState<Mascot | null>(null);
   const [modal, setModal] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const { id } = useParams();
-  const { user, loading } = useContext(AuthContext);
+  const { user, loading: authLoading } = useContext(AuthContext);
 
   const navigate = useNavigate();
 
@@ -18,24 +19,27 @@ export default function MascotDetails() {
   console.log("mascot: ", mascot);
 
   useEffect(() => {
-    if (loading || !user || !id) return;
+    if (!user || !id) return;
 
     const getMascotDetails = async (id: string) => {
       try {
+        setIsLoading(true);
         const data = await MascotService.getById(id);
         console.log("mascot data : ", data.mascot);
         setMascot(data.mascot);
       } catch (error) {
         console.error("Error getting mascot details", error);
+      } finally {
+        setIsLoading(false);
       }
     };
 
-    if (!id) return;
     getMascotDetails(id);
-  }, [id, user, loading]);
+  }, [id, user]);
 
-  if (loading) return <p>Loading...</p>;
+  if (authLoading) return <p>Cheking your session...</p>;
   if (!user) return <Navigate to="/login" />;
+  if (isLoading) return <p>Loading collaborator...</p>;
   if (!mascot) return <p>No mascot found</p>;
 
   return (
