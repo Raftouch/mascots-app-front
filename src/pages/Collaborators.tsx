@@ -5,6 +5,7 @@ import CollaboratorService from "../api/collaborator.service";
 import { AuthContext } from "../context/AuthContext";
 import { Navigate } from "react-router-dom";
 import { useDebounce } from "../hooks/useDebounce";
+import Loader from "../components/UI/Loader/Loader";
 
 export default function Collaborators() {
   const [collaborators, setCollaborators] = useState<Collaborator[]>([]);
@@ -19,6 +20,8 @@ export default function Collaborators() {
     const fetchCollaborators = async () => {
       try {
         setIsLoading(true);
+        // await new Promise((resolve) => setTimeout(resolve, 2000));
+
         const data = await CollaboratorService.getAll(debouncedSearchName);
         setCollaborators(data.collaborators);
         console.log("data : ", data.collaborators);
@@ -49,7 +52,7 @@ export default function Collaborators() {
 
       <h1 className="text-3xl font-bold mb-6">Collaborators</h1>
       {isLoading ? (
-        <p>Loading...</p>
+        <Loader />
       ) : collaborators.length === 0 ? (
         <p className="text-gray-500">No collaborators found</p>
       ) : (

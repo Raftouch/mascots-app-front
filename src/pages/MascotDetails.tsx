@@ -5,6 +5,7 @@ import MascotCard from "../components/MascotCard";
 import MascotService from "../api/mascot.service";
 import Modal from "../components/Modal";
 import { AuthContext } from "../context/AuthContext";
+import Loader from "../components/UI/Loader/Loader";
 
 export default function MascotDetails() {
   const [mascot, setMascot] = useState<Mascot | null>(null);
@@ -39,7 +40,7 @@ export default function MascotDetails() {
 
   if (authLoading) return <p>Cheking your session...</p>;
   if (!user) return <Navigate to="/login" />;
-  if (isLoading) return <p>Loading collaborator...</p>;
+  if (isLoading) return <Loader />;
   if (!mascot) return <p>No mascot found</p>;
 
   return (

@@ -8,6 +8,7 @@ import { Navigate } from "react-router-dom";
 import SelectOption from "../components/UI/SelectOption";
 import FilterInput from "../components/UI/FilterInput";
 import useSortedMascots from "../hooks/useMascots";
+import Loader from "../components/UI/Loader/Loader";
 
 type SortOptionsType = {
   value: SortableMascotKeys | "";
@@ -36,6 +37,8 @@ export default function Mascots() {
     const fetchMascots = async () => {
       try {
         setIsLoading(true);
+        // await new Promise((resolve) => setTimeout(resolve, 2000));
+
         const data = await MascotService.getAll(
           debouncedSearchName,
           bornBefore,
@@ -113,7 +116,7 @@ export default function Mascots() {
 
       <h1 className="text-3xl font-bold mb-6">Mascots</h1>
       {isLoading ? (
-        <p>Loading...</p>
+        <Loader />
       ) : mascots.length === 0 ? (
         <p className="text-gray-500">No mascots found</p>
       ) : (

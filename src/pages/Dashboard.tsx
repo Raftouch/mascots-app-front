@@ -4,6 +4,7 @@ import MascotCardSimplified from "../components/MascotCardSimplified";
 import { API_BASE_URL } from "../config/api";
 import { Navigate } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
+import Loader from "../components/UI/Loader/Loader";
 
 export default function Dashboard() {
   const [lastAddedMascots, setLastAddedMascots] = useState<Mascot[]>([]);
@@ -16,6 +17,8 @@ export default function Dashboard() {
     const getDashboard = async () => {
       try {
         setIsLoading(true);
+        // await new Promise((resolve) => setTimeout(resolve, 2000));
+
         const res = await fetch(`${API_BASE_URL}/dashboard`, {
           credentials: "include",
         });
@@ -43,7 +46,7 @@ export default function Dashboard() {
 
         <div className="space-y-2">
           {isLoading ? (
-            <p>Loading...</p>
+            <Loader />
           ) : lastAddedMascots.length === 0 ? (
             <p>No mascots yet</p>
           ) : (

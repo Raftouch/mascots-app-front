@@ -5,6 +5,7 @@ import type { Mascot } from "../types/mascot";
 import CollaboratorCard from "../components/CollaboratorCard";
 import CollaboratorService from "../api/collaborator.service";
 import { AuthContext } from "../context/AuthContext";
+import Loader from "../components/UI/Loader/Loader";
 
 export default function CollaboratorDetails() {
   const [collaborator, setCollaborator] = useState<Collaborator | null>(null);
@@ -36,7 +37,7 @@ export default function CollaboratorDetails() {
 
   if (authLoading) return <p>Checking your session...</p>;
   if (!user) return <Navigate to="/login" />;
-  if (isLoading) return <p>Loading collaborator...</p>;
+  if (isLoading) return <Loader />;
   if (!collaborator) return <p>No collaborator found</p>;
 
   return (
