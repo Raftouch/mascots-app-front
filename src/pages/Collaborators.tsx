@@ -11,7 +11,7 @@ export default function Collaborators() {
   const [searchName, setSearchName] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const debouncedSearchName = useDebounce(searchName);
-  const { user, loading } = useContext(AuthContext);
+  const { user, loading: authLoading } = useContext(AuthContext);
 
   useEffect(() => {
     if (!user) return;
@@ -32,7 +32,8 @@ export default function Collaborators() {
     fetchCollaborators();
   }, [debouncedSearchName, user]);
 
-  if (!loading && !user) return <Navigate to="/login" />;
+  if (authLoading) return <p>Checking your session...</p>;
+  if (!user) return <Navigate to="/login" />;
 
   return (
     <div className="max-w-3xl mx-auto p-6">

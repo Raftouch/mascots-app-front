@@ -11,28 +11,32 @@ export default function CollaboratorDetails() {
   const [mascotsByCollaborator, setMascotsByCollaborator] = useState<Mascot[]>(
     [],
   );
+  const [isLoading, setIsLoading] = useState(false);
   const { id } = useParams();
-  const { user, loading } = useContext(AuthContext);
+  const { user, loading: authLoading } = useContext(AuthContext);
 
   useEffect(() => {
-    if (loading || !user || !id) return;
+    if (!user || !id) return;
 
     const getCollaboratorDetails = async (id: string) => {
       try {
+        setIsLoading(true);
         const data = await CollaboratorService.getById(id);
         setCollaborator(data.collaborator);
         setMascotsByCollaborator(data.mascotsByCollaborator);
       } catch (error) {
         console.error("Error getting collaborator details", error);
+      } finally {
+        setIsLoading(false);
       }
     };
 
-    if (!id) return;
     getCollaboratorDetails(id);
-  }, [id, user, loading]);
+  }, [id, user]);
 
-  if (loading) return <p>Loading...</p>;
+  if (authLoading) return <p>Cheking your session...</p>;
   if (!user) return <Navigate to="/login" />;
+  if (isLoading) return <p>Loading collaborator...</p>;
   if (!collaborator) return <p>No collaborator found</p>;
 
   return (
