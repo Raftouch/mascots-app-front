@@ -9,27 +9,30 @@ import { useDebounce } from "../hooks/useDebounce";
 export default function Collaborators() {
   const [collaborators, setCollaborators] = useState<Collaborator[]>([]);
   const [searchName, setSearchName] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
   const debouncedSearchName = useDebounce(searchName);
   const { user, loading } = useContext(AuthContext);
 
   useEffect(() => {
-    if (loading || !user) return;
+    if (!user) return;
 
     const fetchCollaborators = async () => {
       try {
+        setIsLoading(true);
         const data = await CollaboratorService.getAll(debouncedSearchName);
         setCollaborators(data.collaborators);
         console.log("data : ", data.collaborators);
       } catch (error) {
         console.error("Error fetching collaborators", error);
+      } finally {
+        setIsLoading(false);
       }
     };
 
     fetchCollaborators();
-  }, [debouncedSearchName, user, loading]);
+  }, [debouncedSearchName, user]);
 
-  if (loading) return <p>Loading...</p>;
-  if (!user) return <Navigate to="/login" />;
+  if (!loading && !user) return <Navigate to="/login" />;
 
   return (
     <div className="max-w-3xl mx-auto p-6">
@@ -44,7 +47,9 @@ export default function Collaborators() {
       </div>
 
       <h1 className="text-3xl font-bold mb-6">Collaborators</h1>
-      {collaborators.length === 0 ? (
+      {isLoading ? (
+        <p>Loading...</p>
+      ) : collaborators.length === 0 ? (
         <p className="text-gray-500">No collaborators found</p>
       ) : (
         <CollaboratorList collaborators={collaborators} />
