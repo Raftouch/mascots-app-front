@@ -6,38 +6,33 @@ import CollaboratorCard from "../components/CollaboratorCard";
 import CollaboratorService from "../api/collaborator.service";
 import { AuthContext } from "../context/AuthContext";
 import Loader from "../components/UI/Loader/Loader";
+import { useFetching } from "../hooks/useFetching";
 
 export default function CollaboratorDetails() {
   const [collaborator, setCollaborator] = useState<Collaborator | null>(null);
   const [mascotsByCollaborator, setMascotsByCollaborator] = useState<Mascot[]>(
     [],
   );
-  const [isLoading, setIsLoading] = useState(false);
+
   const { id } = useParams();
   const { user, loading: authLoading } = useContext(AuthContext);
+
+  const [fetchData, isLoading, error] = useFetching(async () => {
+    const data = await CollaboratorService.getById(id!);
+    setCollaborator(data.collaborator);
+    setMascotsByCollaborator(data.mascotsByCollaborator);
+  });
 
   useEffect(() => {
     if (!user || !id) return;
 
-    const getCollaboratorDetails = async (id: string) => {
-      try {
-        setIsLoading(true);
-        const data = await CollaboratorService.getById(id);
-        setCollaborator(data.collaborator);
-        setMascotsByCollaborator(data.mascotsByCollaborator);
-      } catch (error) {
-        console.error("Error getting collaborator details", error);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    getCollaboratorDetails(id);
+    fetchData();
   }, [id, user]);
 
   if (authLoading) return <p>Checking your session...</p>;
   if (!user) return <Navigate to="/login" />;
   if (isLoading) return <Loader />;
+  if (error) return <p>Something went wrong</p>;
   if (!collaborator) return <p>No collaborator found</p>;
 
   return (

@@ -5,34 +5,25 @@ import { API_BASE_URL } from "../config/api";
 import { Navigate } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
 import Loader from "../components/UI/Loader/Loader";
+import { useFetching } from "../hooks/useFetching";
 
 export default function Dashboard() {
   const [lastAddedMascots, setLastAddedMascots] = useState<Mascot[]>([]);
-  const [isLoading, setIsLoading] = useState(false);
+
   const { user, loading: authLoading } = useContext(AuthContext);
+
+  const [fetchData, isLoading, error] = useFetching(async () => {
+    const res = await fetch(`${API_BASE_URL}/dashboard`, {
+      credentials: "include",
+    });
+    const data = await res.json();
+    setLastAddedMascots(data.mascots);
+  });
 
   useEffect(() => {
     if (!user) return;
 
-    const getDashboard = async () => {
-      try {
-        setIsLoading(true);
-        // await new Promise((resolve) => setTimeout(resolve, 2000));
-
-        const res = await fetch(`${API_BASE_URL}/dashboard`, {
-          credentials: "include",
-        });
-        const data = await res.json();
-        console.log("data", data.mascots);
-        setLastAddedMascots(data.mascots);
-      } catch (error) {
-        console.error("Error fetching mascots", error);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    getDashboard();
+    fetchData();
   }, [user]);
 
   if (authLoading) return <p>Checking your session...</p>;
@@ -43,6 +34,7 @@ export default function Dashboard() {
       <h1 className="text-3xl font-bold mb-6">Dashboard</h1>
       <div className="bg-white shadow-md rounded-xl p-5">
         <h2 className="text-xl font-semibold mb-4">Recently joined :</h2>
+        {error && <p>Something went wrong</p>}
 
         <div className="space-y-2">
           {isLoading ? (

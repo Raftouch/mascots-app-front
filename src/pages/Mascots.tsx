@@ -9,6 +9,7 @@ import SelectOption from "../components/UI/SelectOption";
 import FilterInput from "../components/UI/FilterInput";
 import useSortedMascots from "../hooks/useMascots";
 import Loader from "../components/UI/Loader/Loader";
+import { useFetching } from "../hooks/useFetching";
 
 type SortOptionsType = {
   value: SortableMascotKeys | "";
@@ -26,34 +27,25 @@ export default function Mascots() {
   const [searchName, setSearchName] = useState("");
   const [bornBefore, setBornBefore] = useState("");
   const [bornAfter, setBornAfter] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
   const [selectedSort, setSelectedSort] = useState<SortableMascotKeys | "">("");
+
   const debouncedSearchName = useDebounce(searchName);
+
   const { user, loading: authLoading } = useContext(AuthContext);
+
+  const [fetchData, isLoading, error] = useFetching(async () => {
+    const data = await MascotService.getAll(
+      debouncedSearchName,
+      bornBefore,
+      bornAfter,
+    );
+    setMascots(data.mascots);
+  });
 
   useEffect(() => {
     if (!user) return;
 
-    const fetchMascots = async () => {
-      try {
-        setIsLoading(true);
-        // await new Promise((resolve) => setTimeout(resolve, 2000));
-
-        const data = await MascotService.getAll(
-          debouncedSearchName,
-          bornBefore,
-          bornAfter,
-        );
-        setMascots(data.mascots);
-        console.log("data mascots : ", data.mascots);
-      } catch (error) {
-        console.error("Error fetching mascots", error);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    fetchMascots();
+    fetchData();
   }, [debouncedSearchName, bornBefore, bornAfter, user]);
 
   const sortedMascots = useSortedMascots({ mascots, selectedSort });
@@ -115,6 +107,7 @@ export default function Mascots() {
       </div>
 
       <h1 className="text-3xl font-bold mb-6">Mascots</h1>
+      {error && <p>Something went wrong</p>}
       {isLoading ? (
         <Loader />
       ) : mascots.length === 0 ? (
