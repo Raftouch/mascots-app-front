@@ -6,41 +6,32 @@ import MascotService from "../api/mascot.service";
 import Modal from "../components/Modal";
 import { AuthContext } from "../context/AuthContext";
 import Loader from "../components/UI/Loader/Loader";
+import { useFetching } from "../hooks/useFetching";
 
 export default function MascotDetails() {
   const [mascot, setMascot] = useState<Mascot | null>(null);
   const [modal, setModal] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
+
   const { id } = useParams();
   const { user, loading: authLoading } = useContext(AuthContext);
 
   const navigate = useNavigate();
 
-  console.log("mascot id : ", id);
-  console.log("mascot: ", mascot);
+  const [fetchData, isLoading, error] = useFetching(async () => {
+    const data = await MascotService.getById(id!);
+    setMascot(data.mascot);
+  });
 
   useEffect(() => {
     if (!user || !id) return;
 
-    const getMascotDetails = async (id: string) => {
-      try {
-        setIsLoading(true);
-        const data = await MascotService.getById(id);
-        console.log("mascot data : ", data.mascot);
-        setMascot(data.mascot);
-      } catch (error) {
-        console.error("Error getting mascot details", error);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    getMascotDetails(id);
+    fetchData();
   }, [id, user]);
 
   if (authLoading) return <p>Cheking your session...</p>;
   if (!user) return <Navigate to="/login" />;
   if (isLoading) return <Loader />;
+  if (error) return <p>Something went wrong</p>;
   if (!mascot) return <p>No mascot found</p>;
 
   return (
