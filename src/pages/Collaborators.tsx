@@ -6,33 +6,25 @@ import { AuthContext } from "../context/AuthContext";
 import { Navigate } from "react-router-dom";
 import { useDebounce } from "../hooks/useDebounce";
 import Loader from "../components/UI/Loader/Loader";
+import { useFetching } from "../hooks/useFetching";
 
 export default function Collaborators() {
   const [collaborators, setCollaborators] = useState<Collaborator[]>([]);
   const [searchName, setSearchName] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
+
   const debouncedSearchName = useDebounce(searchName);
+
   const { user, loading: authLoading } = useContext(AuthContext);
+
+  const [fetchData, isLoading, error] = useFetching(async () => {
+    const data = await CollaboratorService.getAll(debouncedSearchName);
+    setCollaborators(data.collaborators);
+  });
 
   useEffect(() => {
     if (!user) return;
 
-    const fetchCollaborators = async () => {
-      try {
-        setIsLoading(true);
-        // await new Promise((resolve) => setTimeout(resolve, 2000));
-
-        const data = await CollaboratorService.getAll(debouncedSearchName);
-        setCollaborators(data.collaborators);
-        console.log("data : ", data.collaborators);
-      } catch (error) {
-        console.error("Error fetching collaborators", error);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    fetchCollaborators();
+    fetchData();
   }, [debouncedSearchName, user]);
 
   if (authLoading) return <p>Checking your session...</p>;
@@ -51,6 +43,7 @@ export default function Collaborators() {
       </div>
 
       <h1 className="text-3xl font-bold mb-6">Collaborators</h1>
+      {error && <p>Something went wrong</p>}
       {isLoading ? (
         <Loader />
       ) : collaborators.length === 0 ? (
