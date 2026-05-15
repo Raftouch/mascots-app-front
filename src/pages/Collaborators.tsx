@@ -11,21 +11,28 @@ import { useFetching } from "../hooks/useFetching";
 export default function Collaborators() {
   const [collaborators, setCollaborators] = useState<Collaborator[]>([]);
   const [searchName, setSearchName] = useState("");
+  const [page, setPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
 
   const debouncedSearchName = useDebounce(searchName);
 
   const { user, loading: authLoading } = useContext(AuthContext);
 
   const [fetchData, isLoading, error] = useFetching(async () => {
-    const data = await CollaboratorService.getAll(debouncedSearchName);
+    const data = await CollaboratorService.getAll(debouncedSearchName, page);
     setCollaborators(data.collaborators);
+    setTotalPages(data.pages);
   });
 
   useEffect(() => {
     if (!user) return;
 
     fetchData();
-  }, [debouncedSearchName, user]);
+  }, [debouncedSearchName, user, page]);
+
+  useEffect(() => {
+    setPage(1);
+  }, [debouncedSearchName]);
 
   if (authLoading) return <p>Checking your session...</p>;
   if (!user) return <Navigate to="/login" />;
@@ -51,6 +58,26 @@ export default function Collaborators() {
       ) : (
         <CollaboratorList collaborators={collaborators} />
       )}
+
+      <div className="flex justify-between mt-8">
+        <button
+          disabled={page === 1}
+          onClick={() => setPage((prev) => prev - 1)}
+          className="px-3 py-1 border rounded disabled:opacity-50"
+        >
+          Prev
+        </button>
+        <span>
+          {page} / {totalPages}
+        </span>
+        <button
+          disabled={page === totalPages}
+          onClick={() => setPage((prev) => prev + 1)}
+          className="px-3 py-1 border rounded disabled:opacity-50"
+        >
+          Next
+        </button>
+      </div>
     </div>
   );
 }
