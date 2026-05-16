@@ -7,12 +7,15 @@ import { Navigate } from "react-router-dom";
 import { useDebounce } from "../hooks/useDebounce";
 import Loader from "../components/UI/Loader/Loader";
 import { useFetching } from "../hooks/useFetching";
+import { getPagesArray } from "../utils/pages";
 
 export default function Collaborators() {
   const [collaborators, setCollaborators] = useState<Collaborator[]>([]);
   const [searchName, setSearchName] = useState("");
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
+
+  const pagesArray = getPagesArray(totalPages);
 
   const debouncedSearchName = useDebounce(searchName);
 
@@ -67,8 +70,17 @@ export default function Collaborators() {
         >
           Prev
         </button>
-        <span>
-          {page} / {totalPages}
+        <span className="flex gap-4">
+          {/* {page} / {totalPages} */}
+          {pagesArray.map((p) => (
+            <button
+              key={p}
+              onClick={() => setPage(p)}
+              className={`${page === p ? "px-4 py-2 bg-gray-800 text-white rounded-md hover:bg-gray-900 font-medium" : ""} border py-2 px-4 rounded-md`}
+            >
+              {p}
+            </button>
+          ))}
         </span>
         <button
           disabled={page === totalPages}
