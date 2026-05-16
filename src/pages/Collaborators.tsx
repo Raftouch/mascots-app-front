@@ -7,6 +7,7 @@ import { Navigate } from "react-router-dom";
 import { useDebounce } from "../hooks/useDebounce";
 import Loader from "../components/UI/Loader/Loader";
 import { useFetching } from "../hooks/useFetching";
+import Pagination from "../components/UI/Pagination";
 
 export default function Collaborators() {
   const [collaborators, setCollaborators] = useState<Collaborator[]>([]);
@@ -59,25 +60,7 @@ export default function Collaborators() {
         <CollaboratorList collaborators={collaborators} />
       )}
 
-      <div className="flex justify-between mt-8">
-        <button
-          disabled={page === 1}
-          onClick={() => setPage((prev) => prev - 1)}
-          className="px-3 py-1 border rounded disabled:opacity-50"
-        >
-          Prev
-        </button>
-        <span>
-          {page} / {totalPages}
-        </span>
-        <button
-          disabled={page === totalPages}
-          onClick={() => setPage((prev) => prev + 1)}
-          className="px-3 py-1 border rounded disabled:opacity-50"
-        >
-          Next
-        </button>
-      </div>
+      <Pagination page={page} totalPages={totalPages} setPage={setPage} />
     </div>
   );
 }
