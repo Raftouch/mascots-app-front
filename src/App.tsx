@@ -1,4 +1,4 @@
-import { Route, Routes } from "react-router-dom";
+import { Navigate, Route, Routes } from "react-router-dom";
 import Dashboard from "./pages/Dashboard";
 import Collaborators from "./pages/Collaborators";
 import Mascots from "./pages/Mascots";
@@ -27,6 +27,7 @@ function App() {
             path="/collaborators/:id/mascots/new"
             element={<CreateMascot />}
           />
+          <Route path="*" element={<Navigate to="/" replace />} />
         </Route>
       </Routes>
     </div>
