@@ -8,36 +8,20 @@ import Loader from "./UI/Loader/Loader";
 export default function AppRouter() {
   const { user, loading: authLoading } = useContext(AuthContext);
 
-  const isAuth = user ? true : false;
+  const isAuth = !!user;
+
+  const routes = isAuth ? privateRoutes : publicRoutes;
+  const fallbackPath = isAuth ? "/" : "/login";
 
   if (authLoading) return <Loader />;
 
   return (
     <Routes>
       <Route element={<Layout />}>
-        {isAuth ? (
-          <>
-            {privateRoutes.map((route) => (
-              <Route
-                key={route.path}
-                path={route.path}
-                element={route.element}
-              />
-            ))}
-            <Route path="*" element={<Navigate to="/" replace />} />
-          </>
-        ) : (
-          <>
-            {publicRoutes.map((route) => (
-              <Route
-                key={route.path}
-                path={route.path}
-                element={route.element}
-              />
-            ))}
-            <Route path="*" element={<Navigate to="/login" replace />} />
-          </>
-        )}
+        {routes.map((route) => (
+          <Route key={route.path} path={route.path} element={route.element} />
+        ))}
+        <Route path="*" element={<Navigate to={fallbackPath} replace />} />
       </Route>
     </Routes>
   );
