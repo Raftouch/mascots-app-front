@@ -8,10 +8,13 @@ import MascotDetails from "../pages/MascotDetails";
 import Mascots from "../pages/Mascots";
 import RegisterPage from "../pages/RegisterPage";
 
-export const routes = [
-  { path: "/", element: <Dashboard /> },
+export const publicRoutes = [
   { path: "/register", element: <RegisterPage /> },
   { path: "/login", element: <LoginPage /> },
+];
+
+export const privateRoutes = [
+  { path: "/", element: <Dashboard /> },
   { path: "/collaborators", element: <Collaborators /> },
   { path: "/collaborators/:id", element: <CollaboratorDetails /> },
   { path: "/mascots", element: <Mascots /> },
